@@ -59,7 +59,7 @@ Key Concepts about Time-specific Data -
 * **TimeStamp** is a Python equivalent for Date and Time.
 * **Trends** involve a gradual increase or decrease in time series data like a rise in death rates due to outbreak of a deadly disease.
 * **Seasonality** occurs in time series when a trend is periodically repeating itself e.g., increase in sale of home decorations around Christmas season. 
-* **Stationarity Time Series** means that the distribution of the data in here, doesn't change with time i.e., the series must have zero trend, constant variance & constant autocorrelation. Absence, of any of these 3 conditions makes it **Non-Stationary**. 
+* **Stationarity** of time series means that the distribution of the data in here, doesn't change with time i.e., the series must have zero trend, constant variance & constant autocorrelation. Absence, of any of these 3 conditions makes it **Non-Stationary**. 
 * **Rolling or Moving Aggregations** on data involves performing aggregations like average or sum of data, using a moving window over the entire dataset.
 * **Resampling** of time series data is common to ease anaysis and improve visualizations. It involves converting data to a higher or lower frequency like daily data to monthly or yearly.
 
