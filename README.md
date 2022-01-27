@@ -98,9 +98,9 @@ However, to be more sure about stationarity or not for our Amazon time series we
 
 * **Augmented Dicky-Fuller (ADF) Test** - The ADF Test is one of the most common tests for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend. If the null hypothesis is not rejected, the series is said to be non-stationary. The result object of the ADF test is a tuple with following key elements:
 
-           * Zeroth element - **Test statistic** (the more negative this number is, the more likely that data is stationary) 
-           * Next element - **p-value** (if p-value < 0.05, we reject the H0 and assume our time series to be stationary)
-           * Last element - **a Python Dictionary with critical values** of the test statistic equating to different p-values
+     * Zeroth element - **Test statistic** (the more negative this number is, the more likely that data is stationary) 
+     * Next element - **p-value** (if p-value < 0.05, we reject the H0 and assume our time series to be stationary)
+     * Last element - **a Python Dictionary with critical values** of the test statistic equating to different p-values
 
 By performing ADF test for Amazon stock data we ran a test for statistical significance to determine whether it was staionary or not, with different levels of confidence and got the following outputs.
 
@@ -130,12 +130,12 @@ In addition to this, on plotting the rolling statistics for the de-trended Amazo
 
 Following are some key concepts regarding Differencing:-
 
-     * Here, from each value in a time series we subtract the previous value. Differencing can be performed manually or using the Pandas' ***.diff() function***. The resulting missing or NaN value at the start is removed using the ***.dropna() method***. Using Pandas function helps in maintaining the date-time information for the differenced series.
-     * When applied for first time the process of differencing is called the **First Order of Differencing**. 
-     * Sometimes, the differencing might be applied more than once if the time series still has some temporal dependence, then it is called **Second Order of Differencing** and so on.
-     * The value of d, therefore, is the minimum number of differencing needed to make the series stationary. And if the time series is already stationary, then d = 0.
-     * We need to be careful not to **over-difference a time series**, because, an over-differenced series may still be stationary but would affect the model parameters.
-     * **Optimal order for Differencing** - minimum differencing order required to get a near-stationary series with a defined mean and for which the ACF plot quickly reaches zero.
+   * Here, from each value in a time series we subtract the previous value. Differencing can be performed manually or using the Pandas' ***.diff() function***. The resulting missing or NaN value at the start is removed using the ***.dropna() method***. Using Pandas function helps in maintaining the date-time information for the differenced series.
+   * When applied for first time the process of differencing is called the **First Order of Differencing**. 
+   * Sometimes, the differencing might be applied more than once if the time series still has some temporal dependence, then it is called **Second Order of Differencing** and so on.
+   * The value of d, therefore, is the minimum number of differencing needed to make the series stationary. And if the time series is already stationary, then d = 0.
+   * We need to be careful not to **over-difference a time series**, because, an over-differenced series may still be stationary but would affect the model parameters.
+   * **Optimal order for Differencing** - minimum differencing order required to get a near-stationary series with a defined mean and for which the ACF plot quickly reaches zero.
      
 In order to get the right order of differencing for Amazon time series we took the **first order of differencing**, performed the ADF test on the differenced series and then plotted the correlation plots (ACF and PACF) for the differenced series.
 
