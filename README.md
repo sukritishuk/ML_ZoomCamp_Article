@@ -15,8 +15,9 @@ Steps for making Amazon Stock Forecasting -
 * Data Cleaning and Formatting - Changing data types, Missing Values Detection, Feature Engineering
 * Exploratory Data Analysis (EDA) of Amazon Time Series - Correlation, Moving Averages, Percentage Change in Stocks, Resampling 
 * Slicing Amazon Stock Data for Forecasting 
-* Testing for Stationarity & Making a time series Stationary
-* Seasonal Decomposition of Time Series
+* Testing for Stationarity 
+* Making a Time Series Stationary
+* Seasonal Decomposition of a Time Series
 * Selection of Non-seasonal and Seasonal Orders - 
   a) Manual selection of orders
   b) Automated selection of orders - using Pmdarima library (auto_arima)
@@ -79,18 +80,88 @@ Key Concepts about Time Series Analysis -
 
 
 
-### Testing for Stationarity & Making a Time Series Stationary - 
+### Testing for Stationarity - 
 
 Time Series analysis only works with stationary data therefore, we need to determine if our Amazon stock data is stationary or not. A dataset is stationary if its statistical properties like mean, variance, and autocorrelation do not change over time. We need to make the time-series stationary before fitting any model.
 
 Testing for Stationarity can be done using one or more of the following methods:-
-* Visualizing Rolling Statistics 
-* Performing Augmented Dicky-Fuller (ADF) Test
+* **Rolling Statistics** - This mathod is a visualization technique where we plot the mean and standard deviation of our time series to determine stationarity. A series becomes stationary if both the mean and standard deviation are flat lines (constant mean and constant variance).  We needed to check this for our Amazon time series as well. From the plots below, we found that there was an increasing mean and standard deviation, indicating that our series was not stationary.
+
+![image](https://user-images.githubusercontent.com/50409210/151359702-8330f044-5174-4d6a-8fa2-bc2722c12f5d.png)
+
+However, to be more sure about stationarity or not for our Amazon time series we used the ADF test method as well as explained below.
+
+* **Augmented Dicky-Fuller (ADF) Test** - The ADF Test is one of the most common tests for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend. If the null hypothesis is not rejected, the series is said to be non-stationary. The result object of the ADF test is a tuple with following key elements:
+           * Zeroth element - **Test statistic** (the more negative this number is, the more likely that data is stationary) 
+           * Next element - **p-value** (if p-value < 0.05, we reject the H0 and assume our time series to be stationary)
+           * Last element - **a Python Dictionary with critical values** of the test statistic equating to different p-values
+
+By performing ADF test for Amazon stock data we ran a test for statistical significance to determine whether it was staionary or not, with different levels of confidence and got the following outputs.
+
+![image](https://user-images.githubusercontent.com/50409210/151357493-7c6aa93b-99ab-4495-ba45-5d8d0be35a6a.png)
+
+As we can see from the test results that our Test statistic was a positive value and our p-value > 0.05.  Additionally, the test statistics exceeded the critical values hence, the data was nonlinear and we did not reject the Null Hypothesis (H0). Thus, by using both the rolling statistic plots and ADF test results we determined that our **Amazon stock price data was Non-Stationary**. Next, we had to work towards making our time series stationary before applying any Machine Learning modelling techniques.
 
 
- Making a Time Series Stationary - If the time series is non-stationary the below methods can be used to make them stationary:-
- * De-trending the time series
- * Differencing the time series
+ ### Making a Time Series Stationary  - 
+ 
+ As we discussed earlier, to proceed with any time series analysis using models, we needed to stationarize our Amazon stock time series. 
+ 
+ If the time series is non-stationary the below methods can be used to make them stationary:-
+ * **De-trending the time series** - This method removes the underlying trend in the time series by standardizing it. It subtracts the mean and divides the result by the standard deviation of the data sample. This has the effect of transforming the data to have mean of zero, or centered, with a standard deviation of 1. Then the ADF test is performed on the de-trended time series to confirm the results.
+
+The ADF test results on de-trended stock data for Amazon below, shows a p=value < 0.05 and also a negative Test statistic, which means that the Amazon time series has become stationary now.
+
+![image](https://user-images.githubusercontent.com/50409210/151385463-0e6bc76f-8005-4ace-9cd2-e7bbdaf22a79.png)
+
+In addition to this, on plotting the rolling statistics for the de-trended Amazon stock (see below) further shows that the time series has become stationary. This is indicated by the relative smoothness of the rolling mean and rolling standard deviation compared to the original De-trended data.
+
+![image](https://user-images.githubusercontent.com/50409210/151386719-78eaddc9-40dd-40b3-8fb7-564a240a8b5f.png)
+
+
+ * **Differencing the time series** - Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence.
+
+Following are some key concepts regarding Differencing:-
+     * Here, from each value in a time series we subtract the previous value. Differencing can be performed manually or using the Pandas' ***.diff() function***. The resulting missing or NaN value at the start is removed using the ***.dropna() method***. Using Pandas function helps in maintaining the date-time information for the differenced series.
+     * When applied for first time the process of differencing is called the **First Order of Differencing**. 
+     * Sometimes, the differencing might be applied more than once if the time series still has some temporal dependence, then it is called **Second Order of Differencing** and so on.
+     * The value of d, therefore, is the minimum number of differencing needed to make the series stationary. And if the time series is already stationary, then d = 0.
+     * We need to be careful not to **over-difference a time series**, because, an over-differenced series may still be stationary but would affect the model parameters.
+     * **Optimal order for Differencing** - minimum differencing order required to get a near-stationary series with a defined mean and for which the ACF plot quickly reaches zero.
+     
+In order to get the right order of differencing for Amazon time series we took the **first order of differencing**, performed the ADF test on the differenced series and then plotted the correlation plots (ACF and PACF) for the differenced series.
+
+![image](https://user-images.githubusercontent.com/50409210/151394410-11eeacb5-58f4-44e4-b6a2-c0d020b8d7cd.png)
+
+As an experiment, we also took a **second order of differencing** for our Amazon time series and repeated the further steps here as well. This was ust to analyze the impact of differencing a series twice.
+
+![image](https://user-images.githubusercontent.com/50409210/151395152-ae6b1ef4-ce3a-46ec-89ea-6dd72c1bf409.png)
+
+Both the 1st Order and 2nd Order of Differencing yielded very small p-values and also very negative test statistics. For the above plots of ACF and PACF, we found that the time series reaches stationarity with two orders of differencing. But on looking at the PACF plot for the 2nd differencing the lag goes into the negative zone very quickly. This indicates that the Amazon stock series might get over-differenced with 2nd order differencing. So, to avoid over-differencing, we restricted the **Order of Differencing** for our dataset to **d = 1**.
+
+
+ ### Seasonal Decomposition of a Time Series - 
+ 
+A seasonal time series generally has some predictable patterns that repeat regularly (i.e., after any length of time). 
+* Every time series is a combination of 3 parts - **Trend, Seasonality and Residual**. Separating a time series into its 3 components is called **decomposition of time series**. * Automatic decomposition of a time series is available in ***statsmodel library***, using the ***seasonal_decompose() function***. It requires one to specify whether the model is additive or multiplicative. The result object contains arrays to access four pieces of data from the decomposition.
+
+* **Additive vs multiplicative seasonality** - These are the two methods to analyze seasonality of a Time Series:- 
+  a) Additive seasonality - Seasonal pattern just adds or has a linear behaviour i.e., where changes over time are consistently made by the same amount.
+  
+  ![image](https://user-images.githubusercontent.com/50409210/151403195-6bf025e3-bb0e-4e02-bf0f-c024da996b57.png)
+  
+  b) Multiplicative seasonality - Trend and seasonal components are multiplied and then added to the error component and behaviour is non-linear (exponential or quadratic). The amplitude of the seasonal oscillations get larger as the data trends up or get smaller as it trends down. To deal with this we take the log transform of the data before modelling it.
+
+![image](https://user-images.githubusercontent.com/50409210/151403945-c5a0ed42-a2bc-4f11-aac9-ae6efe1078e8.png)
+
+We decomposed our Amazon time series using statsmodel's seasonal_decompose() function and setting the ***period parameter*** to 12 (number of data points in each repeated cycle). We also specified the ***model paramter*** as ***multiplicative***. It returned a decompose-results object. We then used the ***plot() method*** of this object to plot the components of our decomposed Amazon time series. 
+
+![image](https://user-images.githubusercontent.com/50409210/151399016-7fb9d988-14b4-4789-82f7-fa575512f10d.png)
+
+We could see from the decomposition plot that our Amazon stock data has both trend and seasonality. The pattern of trend is positive and increasing in nature however, the seasonality pattern does not appear to be very clear from this decomposition plot.
+
+
+ 
  
 
 
