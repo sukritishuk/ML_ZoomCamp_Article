@@ -126,16 +126,16 @@ In addition to this, on plotting the rolling statistics for the de-trended Amazo
 ![image](https://user-images.githubusercontent.com/50409210/151386719-78eaddc9-40dd-40b3-8fb7-564a240a8b5f.png)
 
 
- * **Differencing the time series** - Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence.
+ * **Differencing the time series** - Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence. 
+    
+   Following are some key concepts regarding Differencing:-
 
-Following are some key concepts regarding Differencing:-
-
-   * Here, from each value in a time series we subtract the previous value. Differencing can be performed manually or using the Pandas' ***.diff() function***. The resulting missing or NaN value at the start is removed using the ***.dropna() method***. Using Pandas function helps in maintaining the date-time information for the differenced series.
-   * When applied for first time the process of differencing is called the **First Order of Differencing**. 
-   * Sometimes, the differencing might be applied more than once if the time series still has some temporal dependence, then it is called **Second Order of Differencing** and so on.
-   * The value of d, therefore, is the minimum number of differencing needed to make the series stationary. And if the time series is already stationary, then d = 0.
-   * We need to be careful not to **over-difference a time series**, because, an over-differenced series may still be stationary but would affect the model parameters.
-   * **Optimal order for Differencing** - minimum differencing order required to get a near-stationary series with a defined mean and for which the ACF plot quickly reaches zero.
+    * Here, from each value in a time series we subtract the previous value. Differencing can be performed manually or using the Pandas' ***.diff() function***. The resulting missing or NaN value at the start is removed using the ***.dropna() method***. Using Pandas function helps in maintaining the date-time information for the differenced series.
+    * When applied for first time the process of differencing is called the **First Order of Differencing**. 
+    * Sometimes, the differencing might be applied more than once if the time series still has some temporal dependence, then it is called **Second Order of Differencing** and so on.
+    * The value of d, therefore, is the minimum number of differencing needed to make the series stationary. And if the time series is already stationary, then d = 0.
+    * We need to be careful not to **over-difference a time series**, because, an over-differenced series may still be stationary but would affect the model parameters.
+    * **Optimal order for Differencing** - minimum differencing order required to get a near-stationary series with a defined mean and for which the ACF plot quickly reaches zero.
      
 In order to get the right order of differencing for Amazon time series we took the **first order of differencing**, performed the ADF test on the differenced series and then plotted the correlation plots (ACF and PACF) for the differenced series.
 
@@ -156,13 +156,13 @@ A seasonal time series generally has some predictable patterns that repeat regul
 
 * **Additive vs multiplicative seasonality** - These are the two methods to analyze seasonality of a Time Series:- 
 
-  a) ***Additive*** - Seasonal pattern just adds or has a linear behaviour i.e., where changes over time are consistently made by the same amount.
+   a) ***Additive*** - Seasonal pattern just adds or has a linear behaviour i.e., where changes over time are consistently made by the same amount.
   
   ![image](https://user-images.githubusercontent.com/50409210/151403195-6bf025e3-bb0e-4e02-bf0f-c024da996b57.png)
   
-  b) ***Multiplicative*** - Trend and seasonal components are multiplied and then added to the error component and behaviour is non-linear (exponential or quadratic). The amplitude of the seasonal oscillations get larger as the data trends up or get smaller as it trends down. To deal with this we take the log transform of the data before modelling it.
+   b) ***Multiplicative*** - Trend and seasonal components are multiplied and then added to the error component and behaviour is non-linear (exponential or quadratic). The amplitude of the seasonal oscillations get larger as the data trends up or get smaller as it trends down. To deal with this we take the log transform of the data before modelling it.
 
-![image](https://user-images.githubusercontent.com/50409210/151403945-c5a0ed42-a2bc-4f11-aac9-ae6efe1078e8.png)
+  ![image](https://user-images.githubusercontent.com/50409210/151403945-c5a0ed42-a2bc-4f11-aac9-ae6efe1078e8.png)
 
 We decomposed our Amazon time series using statsmodel's seasonal_decompose() function and setting the ***period parameter*** to 12 (number of data points in each repeated cycle). We also specified the ***model paramter*** as ***multiplicative***. It returned a decompose-results object. We then used the ***plot() method*** of this object to plot the components of our decomposed Amazon time series. 
 
