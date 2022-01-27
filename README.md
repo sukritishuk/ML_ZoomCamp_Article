@@ -24,15 +24,16 @@ Steps for making Amazon Stock Forecasting -
 * Splitting the dataset into Train and Test subsets
 * Model Selection for Stock Predictions - ARIMA, Seasonal ARIMA (SARIMA) Model, Auto ARIMA, Prophet
 * Time Series Forecasting - 
-  a) Generating In-Sample (One-Step Ahead) Predictions for Amazon stock data
-  b) Generating Dynamic Forecasts 
-  c) Making Out-of-Sample Forecasts for Amazon stocks 
+
+    * Generating In-Sample (One-Step Ahead) Predictions for Amazon stock data
+    * Generating Dynamic Forecasts 
+    * Making Out-of-Sample Forecasts for Amazon stocks 
 
 
 
 ### Sources of Data -
 
-I retrieved Amazon Stock data from Kaggle Public Dataset - [FAANG- Complete Stock Data](https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data). The ata was available as a csv file (*Amazon.csv*). The data contained all the relevant data such as Opening price, Closing price, Volumes of stock traded about the Amazon stock from 1997 to 2020.
+I retrieved Amazon Stock data from Kaggle Public Dataset - [FAANG- Complete Stock Data](https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data). The data was available as a csv file (*Amazon.csv*). The data contained all the relevant data such as Opening price, Closing price, Volumes of stock traded about the Amazon stock from 1997 to 2020.
 
 
 ### Data Preparation - 
@@ -55,6 +56,7 @@ I used **Autoregressive Moving Average (ARMA)**, **Autoregressive Integrated Mov
 Before we move on to Time Series Analysis and Forecasting techniques let me explain some key concepts about time series analysis and time-related data in general.
 
 Key Concepts about Time-specific Data -
+
 * **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Horus, Minutes, and Seconds.
 * Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
 * **TimeStamp** is a Python equivalent for Date and Time.
@@ -66,13 +68,16 @@ Key Concepts about Time-specific Data -
 
 
 Key Concepts about Time Series Analysis -
+
 * **Time Series Analysis** involves studying what changes are made in the economic asset or concerned variable during a period of time (e.g. price of gold, birth rates, rainfall levels etc.). It also studies the influence of time over other variables in data.
 * Characteristics in time series data like **seasonality, structural breaks, trends and cyclicity**, often differ from other types of data therefore, require unique set of tools and techniques for analysis.
 * A time series includes three systematic components: **Level, Trend, and Seasonality**, as well as one non-systematic component termed **Noise**.
+
   a) Level - average value in the series
   b) Trend - increasing or falling value in the series
   c) Seasonality - short-term recurring movements in series
   d) Noise - random variance in series
+  
 * Time Series Analysis & modelling of time-specific data can be done only on Stationary time series.  
 * Time series analysis is done only on **continuous variables** and includes Trend Analysis, Forecasting for Cyclical fluctuations or Seasonal patterns. **Trend Analysis** aims to analyze the movements in historical data using visualizations like line plots, bar charts while, **Forecasting** tries to predict the future values with available present & past data.
 
@@ -92,6 +97,7 @@ Testing for Stationarity can be done using one or more of the following methods:
 However, to be more sure about stationarity or not for our Amazon time series we used the ADF test method as well as explained below.
 
 * **Augmented Dicky-Fuller (ADF) Test** - The ADF Test is one of the most common tests for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend. If the null hypothesis is not rejected, the series is said to be non-stationary. The result object of the ADF test is a tuple with following key elements:
+
            * Zeroth element - **Test statistic** (the more negative this number is, the more likely that data is stationary) 
            * Next element - **p-value** (if p-value < 0.05, we reject the H0 and assume our time series to be stationary)
            * Last element - **a Python Dictionary with critical values** of the test statistic equating to different p-values
@@ -108,6 +114,7 @@ As we can see from the test results that our Test statistic was a positive value
  As we discussed earlier, to proceed with any time series analysis using models, we needed to stationarize our Amazon stock time series. 
  
  If the time series is non-stationary the below methods can be used to make them stationary:-
+ 
  * **De-trending the time series** - This method removes the underlying trend in the time series by standardizing it. It subtracts the mean and divides the result by the standard deviation of the data sample. This has the effect of transforming the data to have mean of zero, or centered, with a standard deviation of 1. Then the ADF test is performed on the de-trended time series to confirm the results.
 
 The ADF test results on de-trended stock data for Amazon below, shows a p=value < 0.05 and also a negative Test statistic, which means that the Amazon time series has become stationary now.
@@ -122,6 +129,7 @@ In addition to this, on plotting the rolling statistics for the de-trended Amazo
  * **Differencing the time series** - Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence.
 
 Following are some key concepts regarding Differencing:-
+
      * Here, from each value in a time series we subtract the previous value. Differencing can be performed manually or using the Pandas' ***.diff() function***. The resulting missing or NaN value at the start is removed using the ***.dropna() method***. Using Pandas function helps in maintaining the date-time information for the differenced series.
      * When applied for first time the process of differencing is called the **First Order of Differencing**. 
      * Sometimes, the differencing might be applied more than once if the time series still has some temporal dependence, then it is called **Second Order of Differencing** and so on.
@@ -143,14 +151,16 @@ Both the 1st Order and 2nd Order of Differencing yielded very small p-values and
  ### Seasonal Decomposition of a Time Series - 
  
 A seasonal time series generally has some predictable patterns that repeat regularly (i.e., after any length of time). 
+
 * Every time series is a combination of 3 parts - **Trend, Seasonality and Residual**. Separating a time series into its 3 components is called **decomposition of time series**. * Automatic decomposition of a time series is available in ***statsmodel library***, using the ***seasonal_decompose() function***. It requires one to specify whether the model is additive or multiplicative. The result object contains arrays to access four pieces of data from the decomposition.
 
 * **Additive vs multiplicative seasonality** - These are the two methods to analyze seasonality of a Time Series:- 
-  a) Additive seasonality - Seasonal pattern just adds or has a linear behaviour i.e., where changes over time are consistently made by the same amount.
+
+  a) ***Additive*** - Seasonal pattern just adds or has a linear behaviour i.e., where changes over time are consistently made by the same amount.
   
   ![image](https://user-images.githubusercontent.com/50409210/151403195-6bf025e3-bb0e-4e02-bf0f-c024da996b57.png)
   
-  b) Multiplicative seasonality - Trend and seasonal components are multiplied and then added to the error component and behaviour is non-linear (exponential or quadratic). The amplitude of the seasonal oscillations get larger as the data trends up or get smaller as it trends down. To deal with this we take the log transform of the data before modelling it.
+  b) ***Multiplicative*** - Trend and seasonal components are multiplied and then added to the error component and behaviour is non-linear (exponential or quadratic). The amplitude of the seasonal oscillations get larger as the data trends up or get smaller as it trends down. To deal with this we take the log transform of the data before modelling it.
 
 ![image](https://user-images.githubusercontent.com/50409210/151403945-c5a0ed42-a2bc-4f11-aac9-ae6efe1078e8.png)
 
