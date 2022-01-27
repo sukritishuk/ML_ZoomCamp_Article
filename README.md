@@ -170,21 +170,60 @@ We decomposed our Amazon time series using statsmodel's seasonal_decompose() fun
 
 We could see from the decomposition plot that our Amazon stock data has both trend and seasonality. The pattern of trend is positive and increasing in nature however, the seasonality pattern does not appear to be very clear from this decomposition plot.
 
-
  
- 
-
 
 ### Selection of Non-seasonal and Seasonal Orders -
 
-There are three important parameters in ARIMA:
+Model orders - 
 
-* p (past values used for forecasting the next value)
-* q (past forecast errors used to predict the future values)
-* d (order of differencing)
- 
+When fitting and working with AR, MA, ARMA or SARIMA models, it is very important to understand the model order. We need to pick the most optimal model order before fitting our time series to a model inorder to make better predictions. 
+
+* When we set either p or q to zero, we get a simpler AR or MA model.
+* There are three important orders in ARIMA:
+
+  * **Autoregressive order (p)** - Past values used for forecasting the next value or number of lag observations included in model (lag order).
+  * **Order of differencing (d)** - If d = 0, we simply have an ARMA model.
+  * **Moving Average order (q)** - Size of the moving average window.
+  
+* SARIMA or seasonal ARIMA model is a combination of non-seasonal orders and seasonal orders. Both these parts have orders for the autoregressive, difference and moving average parts.
+  * **Non-seasonal orders** - autoregressive order (p), order of differencing (d) and moving average order (q)
+  * **Seasonal orders** - autoregressive order (P), order of differencing (D), moving average order (Q) and a new order (S), which is the length of the seasonal cycle.
+
+Choosing Model Orders - 
+
+* **Using ACF and PACF plots** - One of the main ways to identify the correct model order is by using the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF). By comparing the ACF and PACF for a time series we can deduce the model order. The time series must be made stationary before making these plots.
+* **Using AIC and BIC values** - The Akaike Information Criterion (AIC), is a metric which tells us how good a model is. The Bayesian Information Criterion (BIC), is very similar to the AIC. Models which fit the data better have lower AICs and BICs, while BIC penalizes overly complex models. Mostly, both AIC and BIC will choose the same model. These can be found on the right side of the summary of the fitted-models-results object or by using the ***.aic attribute*** and the ***.bic attribute***.
 
 
+a) Manual Selection of Orders - 
+
+For our Amazon time series, we manually tried to select orders by writing for loops. We tried to fit models with multiple order combinations, extracted the AIC and BIC values for each combination of orders and then selected the order yielding the lowest AIC value. We found that the BIC score for the same order also turned out to be the lowest in almost every case. 
+
+We used this same process to select the following order types:- 
+
+* **Finding only the  optimal Non-Seasonal Orders (p,d,q)** - This resulted in giving us the lowest AIC and BIC values for our Amazon stock data by setting the order values to **p=2, d=1 and q=2**. 
+* **Finding only the optimal Seasonal Orders (P,D,Q)** - We already pre-defined our length of seasonal cycle (S) as 7, as the seasonlity of our Amazon time series appeared to be daily, We also pre-defined our non-seasonal orders to be p=2, d=1, q=2 (results from our last order selection). From the results, lowest AIC and BIC values were yielded by setting the seasonal order values to **P=0, D=1 and Q=2**.
+* **Finding both Non-seasonal (p,d, q) and Seasonal (P,D,Q) Orders** - Here, we had already pre-defined our length of seasonal cycle or S = 7, d = 1 and D = 1. It resulted in yielding the folowing:- 
+
+![image](https://user-images.githubusercontent.com/50409210/151419135-8f5b94c8-3fa2-4c20-9a8f-1d938fbe943d.png)
+
+  * Non-Seasonal Orders - p = 0, d = 1 and q = 1
+  * Seasonal Orders - P = 0, D = 1 and Q = 1
+
+
+b) Automated Selection of Orders - 
+
+The [pmdarima package](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html), automatically discovers the optimal order for an ARIMA model. The ***auto_arima function*** from this package loops over model orders to find the best one. We used this method also to choose our most optima model orders. 
+* We set the ***period for seasonal differencing*** as Daily or m=7 for Amazon time series.
+* We specified **seasonal parameter** as True as our time series appears to be seasonal in nature.
+* 
+
+![image](https://user-images.githubusercontent.com/50409210/151422371-39e053bb-e78b-47bd-be95-6e04df35011e.png)
+
+
+
+
+![image](https://user-images.githubusercontent.com/50409210/151420930-061cb8d6-bff2-4d6b-9053-bef526f0b870.png)
 
 ### Model Selection for Stock Predictions -
 
