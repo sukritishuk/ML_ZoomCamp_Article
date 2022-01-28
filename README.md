@@ -4,7 +4,7 @@
 
 ## Introduction:
 
-Time has always been an important factor in statistical analysis because of its quantifiable and ever-changing nature and its impact on our daily lives. Today, it has become all the more important in both financial & non-financial contexts with the emergence of real-time Data and real-time Analytics. 
+Time has always been a key factor in statistical analysis because of its quantifiable and ever-changing nature and its impact on our daily lives. Today, it has become all the more important in both financial & non-financial contexts with the emergence of real-time Data and real-time Analytics. 
 
 
 In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting in Python**. Time series analysis in Python uses timestamps, time deltas, and time periods for plotting time series data. My goal was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data. 
@@ -21,7 +21,8 @@ Steps for making Amazon Stock Forecasting -
 * Selection of Non-seasonal and Seasonal Orders - 
   a) Manual selection of orders
   b) Automated selection of orders - using Pmdarima library (auto_arima)
-* Splitting the dataset into Train and Test subsets
+* Comparing Models and Interpreting Results
+* Splitting the Dataset for Time Series Analysis
 * Model Selection for Stock Predictions - ARIMA, Seasonal ARIMA (SARIMA) Model, Auto ARIMA, Prophet
 * Time Series Forecasting - 
 
@@ -213,21 +214,86 @@ We used this same process to select the following order types:-
 
 b) Automated Selection of Orders - 
 
-The [pmdarima package](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html), automatically discovers the optimal order for an ARIMA model. The ***auto_arima function*** from this package loops over model orders to find the best one. We used this method also to choose our most optima model orders. 
-* We set the ***period for seasonal differencing*** as Daily or m=7 for Amazon time series.
-* We specified **seasonal parameter** as True as our time series appears to be seasonal in nature.
-* 
+The [pmdarima package](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html), automatically discovers the optimal order for an ARIMA model. The ***auto_arima function*** from this package loops over model orders to find the best one. We used this method also to choose our most optimal model orders. he auto-arima function has a lot of parameters that we may want to set. Many of these have default values and the only required argument to the function is the data. Optionally we can also set the order of non-seasonal differencing; initial estimates of the non-seasonal orders; and the maximum values of non-seasonal orders to test.
+
+* We set the ***period for seasonal differencing*** as Daily or m=7 for our Amazon time series.
+* We specified the ***seasonal parameter***=True as our time series appeared to be seasonal in nature.
+* The function performs differencing tests (e.g., Kwiatkowski–Phillips–Schmidt–Shin, Augmented Dickey-Fuller, or Phillips–Perron) to determine the order of differencing, d. Here, we specified the ****test argument***='adf' to specify the use of Augmented Dickey-Fuller test.
+* We can also specify fitting models within start p, max p, start q, max q ranges. Here, we specified only the ***max_p*** and ***max_q*** parameters as 2 for our model.
+* After determining the optimal order of seasonal differencing, D, auto_arima also seeks to identify the optimal P and Q hyper-parameters if the seasonal option (i.e., seasonal=True) is enabled.
+* The object returned by the function is the results object of the best model found by the search.
 
 ![image](https://user-images.githubusercontent.com/50409210/151422371-39e053bb-e78b-47bd-be95-6e04df35011e.png)
 
+As shown above, the Auto ARIMA model assigned the following order values to our Amazon time series data:-
+   * Non-Seasonal Orders - 2, 1 and 2 to p, d, and q, respectively.
+   * Seasonal Orders - 0, 0, 2 and to P, D, Q respectively.
 
 
+Thus, by using both manual selection and automatic selection of orders we could find the range of values suitable for our Amazon time series. Below is a snapshot of values yielded for respective orders by different selection methods. 
 
 ![image](https://user-images.githubusercontent.com/50409210/151420930-061cb8d6-bff2-4d6b-9053-bef526f0b870.png)
 
+
+
+### Comparing Models and Interpreting Results - 
+
+Interpreting Model Summary:
+
+Interpreting results from a machine learning algorithm can be a trying experience. An important component of statsmodel library is that we can inspect the results from the fitted model using a ***.summary() method***. 
+
+![image](https://user-images.githubusercontent.com/50409210/151540717-d2910469-d224-4e7a-b0e9-a89cac66d1d3.png)
+
+Let us walkthrough the summary result components:-
+* **General Information** - The top section includes useful information such as the order of the model that we fit, the number of observations or data points, the name of the time series. Statsmodels uses the same module for all of the autoregressive models, therefore, the header displays **SARIMAX Results** even for an AR model.
+* **Statistical Significance** - The next section of the summary shows the fitted model parameters, like the ar.L1 and ar.L2 rows for e.g., if fitting an ARMA(2,1) model having AR-lag-1 and lag-2 coefficients. Similarly, the MA coefficients are in the last rows. The first column shows the model coefficients whilst the second column shows the standard error in these coefficients. This is the uncertainty on the fitted coefficient values. We want each term to have a **p-value < 0.05**, so we can reject the null hypothesis with values that are statistically significant.
+* **Assumption Review** - 
+  * *Ljung Box (Q)* test estimates that the errors are white noise. Since its probability Prob(Q) is above 0.05, we can’t reject the null that the errors are white noise.
+  * *Heteroscedasticity (H)* tests that the error residuals have the same variance. Our summary statistics shows  a p-value of 0.00, which means we reject the null hypothesis and our residuals show variance. 
+  * *Jarque-Bera (JB)* tests for the normality of errors. We see a test statistic with a probability of 0, which means we reject the null hypothesis, and the data is not normally distributed. 
+  * We also see that the distribution has a slight positive skewness and a large kurtosis.
+* **Fit Analysis** - Values in this section of the summary like the Log-Likelihood, AIC, BIC, and HQIC help compare one model with another. AIC penalizes a model for adding parameters and BIC alongwith AIC penalize complex models. Lower the values for these indicators better is the fit of the model on the distribution of data.
+
+
+
+Interpreting Plot Diagnostics:
+
+For an ideal model the residuals should be uncorrelated white Gaussian noise centered to zero. We can use the results object's ***.plot_diagnostics method*** to generate four common plots for evaluating this. This 4-plot is a convenient graphical technique for model validation and consists of the following set of plots:-
+
+![image](https://user-images.githubusercontent.com/50409210/151553656-6dd826ed-e8df-4afd-975e-f305f34eafe8.png)
+
+* **Residuals Plot** - This plot shows the one-step-ahead standardized residuals. For good fitted model there should be no obvious structure in the residuals. 
+* **Histogram plus KDE Estimate Plot** - This plot shows us the distribution of the residuals and tests for (normal) distribution. The orange line shows a smoothed version of this histogram and the green line, shows a normal distribution. For a good model both the green and orange lines should be as close as possible.
+* **Normal Normal Q-Q Plot** - This one also also compares the distribution of the model residuals to normal distribution. For residuals to be normally distributed all the points should lie along the red line, except some values at either end.
+* **Correlogram** - This is an ACF plot of the residuals wherein 95% of the correlations for lag greater than zero should not be significant. If there is significant correlation in the residuals, it means there is some information in the data not captured by our model.
+
+![image](https://user-images.githubusercontent.com/50409210/151554111-41043315-8bb7-4670-8f44-97e3d613511a.png)
+
+Model results from each of the models selected and used for Amazon time series were interpreted using summary results and plot diagnostics methods as discussed above.
+
+
+### Splitting the Dataset for Time Series Analysis - 
+
+Splitting the dataset is an important exerise before selecting and fitting machine learning algorithms on any dataset. For time series analysis, the split in time series dataset would be slightly different from other methods. Here, as we would be using past values to make future predictions, we would be splitting the data in relation to time. Thus, we would be training our algorithms on the data coming earlier in the time series and testing on data that comes later. 
+
+![image](https://user-images.githubusercontent.com/50409210/151556040-343ff83f-f9d1-455f-9156-e0c88452bc5d.png)
+
+As we can see from the plot above, we have split our Amazon time series also into training and testing subsets in the ratio of 80:20. The plot depicts how data earlier in time would be used for training the algorithms while latest data would be used for making forecasts.
+
+
 ### Model Selection for Stock Predictions -
 
-Broadly, Time-Series models like **Autoregressive (AR), Integrated (I), Moving Average(MA)** are combined to form **Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA)** models. Some deep learning-based models include **Long-short term memory(LSTM)**.
+There are different kind of time series analysis techniques like the following -
+* Autoregression (AR)
+* Moving Average (MA)
+* Autoregressive Moving Average (ARMA)
+* Autoregressive Integrated Moving Average (ARIMA)
+* Seasonal Autoregressive Integrated Moving-Average (SARIMA)
+
+**Autoregressive (AR), Integrated (I), Moving Average(MA)** are combined to form **Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA)** models. Some deep learning-based techniques include **Long-short term memory(LSTM)**.
+
+
+
 
 
 Autoregressive Integrated Moving Average (ARIMA) - 
