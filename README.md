@@ -337,7 +337,6 @@ There appears to be very little difference in the residual plot from SARIMA as c
 
 
 
-
 * **Prophet** - 
 
 Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
@@ -362,9 +361,38 @@ While working with the Prophet algorithm for Amazon time series we undertook the
 
 
 
+### Time Series Forecasting -
+
+Time series forecasting is the use of a model to predict future values based on previously observed values.
+
+* **Generating In-Sample (One-Step Ahead) Predictions** - 
+  
+This forecasting technique allows us to evaluate how good our model is at predicting just one value ahead. 
+
+  * We can use the SARIMAX fitted results object's ***get_prediction() method*** to generate in-sample predictions. 
+  * We can set the ***start parameter*** as a negative integer stating how many steps back to begin the forecast. For the Amazon time series, we set the start parameter to -30 as we wanted to make predictions for the last 30 time-periods of the Amazon data. It returns a forecast object. 
+  * The central value of the forecast is extracted and stored in the ****predicted_mean attribute*** of the forecast object and can be used alongwith the lower and upper confidence limits to plot forecasts. 
+  * Here, the mean prediction is marked with a red line while the uncertainty range is shaded. The uncertainty is due to the random shock terms that we can't predict.
+
+![image](https://user-images.githubusercontent.com/50409210/151599223-5a0ee67b-65b5-48e8-8550-33bc013179ce.png)
 
 
+* **Generating Dynamic Forecasts** - 
+
+We can make predictions further than just one step ahead by using dynamic prediction technique. It first predicts one step ahead, and then use this predicted value to forecast the next value after that. 
+  * Here, we set the  ***dynamic parameter=True*** in addition to the steps for making one-step ahead predictions. 
+  * Making dynamic predictions, implies that the model makes predictions with no corrections for a future period of time, unlike making one-step-ahead predictions. Once the predictions are made for the period, we can compare predictions with actual values.
+
+![image](https://user-images.githubusercontent.com/50409210/151602227-18993fa7-c647-446c-958f-19f0b7d62274.png)
+
+For our dataset, here too we set the start parameter to -30 as we wanted to make dynamic predictions for the last 30 time-periods of the Amazon data.
 
 
+* **Making Out-of-Sample Forecasts** - 
+
+Finally, after testing our predictions in-sample, we can use our model to predict the future. To make future forecasts we use the ***get_forecast method*** of the results object. 
+* We choose the number of steps after the end of the training data to forecast up to by specifying the ***steps parameter***. For making forecasts using Amazon data for the next we used steps=182 in order to forecast for approximately 6 months into the future.
+
+![image](https://user-images.githubusercontent.com/50409210/151603099-7c88f2b4-05ce-4580-8945-bc1af4e1365e.png)
 
 
