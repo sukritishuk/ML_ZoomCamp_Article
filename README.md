@@ -9,6 +9,9 @@ Time has always been a key factor in statistical analysis because of its quantif
 
 In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting in Python**. Time series analysis in Python uses timestamps, time deltas, and time periods for plotting time series data. My goal was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data. 
 
+![Time_Series_Analysis_In_Python_2](https://user-images.githubusercontent.com/50409210/151573439-2375f9c6-3053-4867-8341-87b670af37dc.png)
+(Image Credit](https://www.simplilearn.com/tutorials/python-tutorial/time-series-analysis-in-python)
+
 Steps for making Amazon Stock Forecasting -
 
 * Loading & Studying the Amazon Stock Data 
@@ -274,7 +277,7 @@ Model results from each of the models selected and used for Amazon time series w
 
 ### Splitting the Dataset for Time Series Analysis - 
 
-Splitting the dataset is an important exerise before selecting and fitting machine learning algorithms on any dataset. For time series analysis, the split in time series dataset would be slightly different from other methods. Here, as we would be using past values to make future predictions, we would be splitting the data in relation to time. Thus, we would be training our algorithms on the data coming earlier in the time series and testing on data that comes later. 
+Splitting the dataset is an important exerise before selecting and fitting machine learning algorithms on any dataset. For time series analysis, the split in dataset would be slightly different from other cases where we try to split datasets randomly into train-test subsets. Here, as we would be using past values to make future predictions, we would be splitting the data in relation to time. Thus, we would be training our algorithms on the data coming earlier in the time series and testing on data that comes later. 
 
 ![image](https://user-images.githubusercontent.com/50409210/151556040-343ff83f-f9d1-455f-9156-e0c88452bc5d.png)
 
@@ -283,30 +286,82 @@ As we can see from the plot above, we have split our Amazon time series also int
 
 ### Model Selection for Stock Predictions -
 
-There are different kind of time series analysis techniques like the following -
+There are different kind of time series analysis techniques with the most common ones like the following -
 * Autoregression (AR)
 * Moving Average (MA)
 * Autoregressive Moving Average (ARMA)
 * Autoregressive Integrated Moving Average (ARIMA)
 * Seasonal Autoregressive Integrated Moving-Average (SARIMA)
 
-**Autoregressive (AR), Integrated (I), Moving Average(MA)** are combined to form **Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA)** models. Some deep learning-based techniques include **Long-short term memory(LSTM)**.
+**Autoregressive (AR), Integrated (I), Moving Average(MA)** are combined to form **Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA)** models. SARIMA combines the ARIMA model with the ability to perform the same autoregression, differencing, and moving average modeling at the seasonal level. A SARIMA model can be used to develop AR, MA, ARMA and ARIMA models. 
+
+The **Seasonal Autoregressive Integrated Moving-Average with Exogenous Regressors (SARIMAX)** is an extension of the SARIMA model that also includes the modeling of exogenous variables. These are parallel input sequences having observations at the same time steps as the original series.
+
+Some deep learning-based techniques include **Long-short term memory(LSTM)**.
+
+
+For analyzing Amazon stock time series I have used the following Time Series Analyysis techniques:-
+
+* **Autoregressive Integrated Moving Average (ARIMA)** - 
+    * It is used to predict the future values of a time series using its past values and forecast errors.
+    * Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
+    * We can also implement an ARIMA model using the SARIMAX model class from statsmodels.
+    * ARIMA model has three model orders - p the autoregressive order; d the order of differencing; and q the moving average order
+  
+Manual selection of model orders on Amazon time series yielded lowest AIC and BIC values by setting the non-seasonal order values to **p=2, d=1 and q=2**. These were used to fit an ARIMA(2,1,2) model on our dataset. The folowing summary results and residual diagnostic plots were outputed from this model.
+  
+![image](https://user-images.githubusercontent.com/50409210/151575176-06b449ad-c1bf-4ad0-b001-9720f7f7128a.png)
+
+The JB p-value or Prob(JB) is zero, which means we should reject the null hypothesis that the residuals are normally distributed.
+
+![image](https://user-images.githubusercontent.com/50409210/151575262-78ddcd2d-8ea2-4df1-ad48-1b02d9ec6487.png)
+
+There are some obvious patterns in the residuals plot towards the right end of the plot. The KDE curve is not very similar to the normal distribution plot. Most of the data points do not lie on the red line as shown by the histogram and Q-Q plots. In the last plot is the correlogram, which is just an ACF plot of the residuals 95% of the correlations for lag greater than zero should not be significant and they appear to be not significant here as well.
+
+Both these output interpretations above, suggest that our ARiMA(2,1,2) model does not fit our Amazon stock data too well yet.
+
+
+* **Seasonal Autoregressive Integrated Moving-Average (SARIMA)** -
+
+The decomposition plot for our Amazon data suggested that there was some seasonality in the time series. This prompted us to use the SARIMA techniques next. The notation for SARIMA model involves specifying the order for the AR(p), I(d), and MA(q) models as parameters to an ARIMA function and AR(P), I(D), MA(Q) and m parameters at the seasonal level, e.g. SARIMA(p, d, q)(P, D, Q)m where “m” is the number of time steps in each season (the seasonal period). 
+
+Although, manual selection of orders yielded SARIMA(0,1,1)(0,1,1,7) for Amazon time series instead of using these parameters to fit our model we fittied the SARIMA model, using auto_arima function of the pmdarima package.  As we can see below, the most optimal orders selected from here were **p=2, d=1, q=2, P=0, D=0, Q=2, S or m=7**.
+
+![image](https://user-images.githubusercontent.com/50409210/151579043-f744850b-5720-4c9f-b730-953b07c7893d.png)
+
+The summary result above shows, that the model does not meet the condition of no correlation (independence in the residuals) because the p-value of the Ljung-Box test Prob(Q) is greater than 0.05, so we cannot reject the null hypothesis of independence. Also, we cannot say that the residual distribution is having constant variance (homoscedastic) because the p-value of the Heteroskedasticity test Prob(H) is smaller than 0.05.
+
+![image](https://user-images.githubusercontent.com/50409210/151580269-27bdf8f7-ffa8-4c86-a8b0-6fdae40fac11.png)
+
+There appears to be very little difference in the residual plot from SARIMA as compared to that from ARIMA.
 
 
 
 
+* **Prophet** - 
 
-Autoregressive Integrated Moving Average (ARIMA) - 
-* Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
-* Considers historical values to predict future values. 
+Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
+
+* Prophet is a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality. 
+* It considers the effects of holiday quite well and is capable of handling seasonality-related components in data by the use of simple parameters to fine-tune the model like specifying holidays, daily seasonality etc
+* The input for Prophet is a dataframe with two columns, a Date and a target variable column named as - **ds** and **y** respectively.
+
+  ![image](https://user-images.githubusercontent.com/50409210/151583807-582fe6b6-159f-4836-97d9-e7a6cd58d94c.png)
+  
+While working with the Prophet algorithm for Amazon time series we undertook the following series of teps:-
+
+  *  Firstly, we created a **Prophet instance** by specifying the Daily seasonality effects for our time series using the ***daily_seasonality=True parameter***. 
+  *  After this we trained the model and made predictions for 1 year time in future by specifying the ***period parameter=365***. This yielded a DataFrame of forecasts with key parameters as columns ("ds” indicating the Date, “yhat” indicating the predicted time series data, “yhat_lower” and “yhat_upper” indicating the probable lower and upper limit of forecasts).
+  
+  ![image](https://user-images.githubusercontent.com/50409210/151591087-606e2804-441b-48b2-96af-9768c4f5eeb7.png)
+  
+*  Prophet also allowed us to plot different components from our forecasts using the ***plot_components parameter*** thereby showing the trend, yearly weekly and daily plots.
+*  Adding Changepoints is another useful feature in Prophet, as they allow one to put more emphasis and find reasons for changes in trajectory or trends in data. Changepoints are the datetime points where the time series have abrupt changes in the trajectory. By default, Prophet adds 25 changepoints to the initial 80% of the dataset.
+
+![image](https://user-images.githubusercontent.com/50409210/151587907-a0c69115-441c-4f6b-a310-4f190404199f.png)
 
 
-Prophet - 
-* Designed and pioneered by Facebook, a third-party time series forecasting library.
-* Requires almost no data preprocessing, very simple to implement. 
-* Library is capable of handling stationarity within the data and seasonality related components in data.
-* The input for Prophet is a dataframe with two columns: date and target variable column (columns named as - **ds** and **y**).
-* [Prophet](https://github.com/facebook/prophet) enables the use of simple parameters to fine-tune the model like specifying holidays, daily seasonality etc. 
+
 
 
 
