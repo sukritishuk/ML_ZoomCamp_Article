@@ -14,9 +14,9 @@ In machine learning, Time Series Analsis & Forecasting is among the most applied
 
 Steps for making Amazon Stock Forecasting -
 
-* Loading & Studying the Amazon Stock Data 
+* Loading & Studying the Data 
 * Data Cleaning and Formatting - Changing data types, Missing Values Detection, Feature Engineering
-* Exploratory Data Analysis (EDA) of Amazon Time Series - Correlation, Moving Averages, Percentage Change in Stocks, Resampling 
+* Exploratory Data Analysis (EDA) of Time Series - Correlation, Moving Averages, Percentage Change in Stocks, Resampling 
 * Slicing Amazon Stock Data for Forecasting 
 * Testing for Stationarity 
 * Making a Time Series Stationary
@@ -43,28 +43,61 @@ I retrieved Amazon Stock data from Kaggle Public Dataset - [FAANG- Complete Stoc
 
 ### Data Preparation - 
 
-Firstly, I retrieved the time series data for Amazon company stock from Kaggle. I cleaned and pre-processed it, using Python in-built functions and libraries such as Pandas, Numpy. Then, Matplotlib and Seaborn libraries were used to perform EDA analysis on Amazon time series data, make visualizations and draw insights from the different features. 
+**Loading & Studying the Data:**
 
-![image](https://user-images.githubusercontent.com/50409210/151208664-a286b590-89b6-4cdf-b42a-fb7760d2ccce.png)
-
-There are multiple feature variables in this dataset like below, apart from one time-based feature Date. 
+Firstly, I retrieved the time series data for Amazon company stock from Kaggle. There are multiple numerical feature columns in this dataset like below, apart from one time-based feature Date. 
 * Open and Close - starting and final price at which the stock is traded on a particular day.
 * High and Low - maximum and minimum trading price of the stock for the day. 
 * Close - last price at which the stock trades before markets closed for the day.
 * Adjusted Close (Adj Close) - Closing price for the stock on a day adjusted for corporate actions like stock-splits or dividends.
 * Volume - total number of shares traded (bought or sold) for Amazon during a day.
 
-An important thing to note is that the market remains closed on weekends and any public holidays therefore, we may notice some date values to be missing in the dataset. To perform time Series Forecasting I used only the Date and Adjusted Close. The data was then split it into train and test subsets to verify our predictions from models.
-I used **Autoregressive Moving Average (ARMA)**, **Autoregressive Integrated Moving Average (ARIMA)** and **Facebook Prophet** models to make predictions. 
+![image](https://user-images.githubusercontent.com/50409210/151208664-a286b590-89b6-4cdf-b42a-fb7760d2ccce.png)
+
+The dataset pertains to the period between May 1997 and August 2020. Before any time series analysis, all the time-specific variables must be in the Datetime format. Thus, the following columns would have to be formatted first. Pandas library contains extensive tools for working with dates, times, and time-indexed data.
+
+
+**Data Cleaning and Formatting:**
+
+I cleaned and pre-processed it, using Python in-built functions and libraries such as Pandas, Numpy. Then, Matplotlib and Seaborn libraries were used to perform EDA analysis on Amazon time series data, make visualizations and draw insights from the different features.
+
+Python's built-in [datetime modeule](https://docs.python.org/3/library/datetime.html) helps in working with dates and times. Here, I used this modoule to convert the Date column to DatetimeIndex data type. The most fundamental of date/time objects are the *Timestamp** and *DatetimeIndex* objects. I used the ***pd.to_datetime() function***, to parse Date columns. This converted the format from object to *datetime64* format, encoding dates as 64-bit integers, and thus allowing an arrays of dates to be represented very compactly. 
+
+![image](https://user-images.githubusercontent.com/50409210/151670939-1b9a3c28-ef20-4100-9251-32a672580067.png)
+
+As the Amazon stock dataset had no missing values in any columns no imputations were needed. We used different instance attributes in the datetime module like ***.year() or .month_name()*** to strip or parse the date column features and create separate columns from them like for Year, Month Name, Day Name etc. This would be used in further EDA analysis on the dataset.
+
+![image](https://user-images.githubusercontent.com/50409210/151671634-deddae70-1374-4fc2-915e-25e6093f6d6c.png)
+
+
+### Exploratory Data Analysis (EDA) of Time Series -
+
+Now, that we had our dataset cleaned and formatted we carried out some basic Exploratory data analysis on our Amazon stock dataset.
+
+* Amazon Close prices show very steep rise during the period after 2016 however, its volume have declined from 2000 or 2008 levels when they were at peak.
+* Both the 50-day and 200-day Moving Average for Amazon shows a fairly smoothed but rising in Daily adjusted closing price.
+
+  ![image](https://user-images.githubusercontent.com/50409210/151674901-950f0f48-fbb4-4896-8d28-4db07a7f28dc.png)
+  
+* The movements in Amazon stock have reduced over time as we can see small percentage change (increase or decrease) in stock value 2016 onwards compared to that in the 2000s.
+  
+  ![image](https://user-images.githubusercontent.com/50409210/151675037-0ffa48a1-21ce-4aec-9cd7-9c4d464e8841.png)
+  
+* Amazon stock volumes appear to be the largest on Wednesday and Thursday while almost Nil on weekends (Saturday, Sunday). This is due to no trading on weekends. Also the January appears to be the highest month for trades in Amazon stocks followed by July, october and November compared to August which has the lowest. 
+
+  ![image](https://user-images.githubusercontent.com/50409210/151675266-0d9c80ca-6921-4996-bb40-9f18f598ed5f.png)
+  
+ * The Close-High feature shows the maximum positive correlation with the Volume feature. We can say that if the Amazon Closing price stays away from High value, it may lead to more transactions or trading volumes that day for the stock. However, many other factors would also be influencing the trading volumes for a stock per day.
+ 
+  ![image](https://user-images.githubusercontent.com/50409210/151675419-4490f38d-652b-47e7-b8be-9d6dab70c664.png)
 
 
 Before we move on to Time Series Analysis and Forecasting techniques let me explain some key concepts about time series analysis and time-related data in general.
 
 Key Concepts about Time-specific Data -
 
-* **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Horus, Minutes, and Seconds.
-* Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
-* **TimeStamp** is a Python equivalent for Date and Time.
+* **TimeStamp** references a particular moment in time (e.g., January 4th, 2022 at 7:00am). **Time Intervals and Periods** reference a length of time between a particular beginning and end point. **Time deltas or durations** refer to an exact length of time, between two dates or times.
+* **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Hours, Minutes, and Seconds. Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
 * **Trends** involve a gradual increase or decrease in time series data like a rise in death rates due to outbreak of a deadly disease.
 * **Seasonality** occurs in time series when a trend is periodically repeating itself e.g., increase in sale of home decorations around Christmas season. 
 * **Stationarity** of time series means that the distribution of the data in here, doesn't change with time i.e., the series must have zero trend, constant variance & constant autocorrelation. Absence, of any of these 3 conditions makes it **Non-Stationary**. 
