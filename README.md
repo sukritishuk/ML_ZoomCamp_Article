@@ -21,9 +21,10 @@ Steps for making Amazon Stock Forecasting -
 * Testing for Stationarity 
 * Making a Time Series Stationary
 * Seasonal Decomposition of a Time Series
-* Selection of Non-seasonal and Seasonal Orders - 
-  a) Manual selection of orders
-  b) Automated selection of orders - using Pmdarima library (auto_arima)
+* Selection of Non-seasonal and Seasonal Orders -
+ 
+  * Manual selection of orders
+  * Automated selection of orders - using Pmdarima library (auto_arima)
 * Comparing Models and Interpreting Results
 * Splitting the Dataset for Time Series Analysis
 * Model Selection for Stock Predictions - ARIMA, Seasonal ARIMA (SARIMA) Model, Auto ARIMA, Prophet
