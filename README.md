@@ -301,9 +301,9 @@ The **Seasonal Autoregressive Integrated Moving-Average with Exogenous Regressor
 Some deep learning-based techniques include **Long-short term memory(LSTM)**.
 
 
-For analyzing Amazon stock time series I have used the following Time Series Analyysis techniques:-
+For analyzing Amazon stock time series I used the following Time Series Analysis techniques:-
 
-* **Autoregressive Integrated Moving Average (ARIMA)** - 
+**Autoregressive Integrated Moving Average (ARIMA)** - 
     * It is used to predict the future values of a time series using its past values and forecast errors.
     * Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
     * We can also implement an ARIMA model using the SARIMAX model class from statsmodels.
@@ -322,7 +322,7 @@ There are some obvious patterns in the residuals plot towards the right end of t
 Both these output interpretations above, suggest that our ARiMA(2,1,2) model does not fit our Amazon stock data too well yet.
 
 
-* **Seasonal Autoregressive Integrated Moving-Average (SARIMA)** -
+**Seasonal Autoregressive Integrated Moving-Average (SARIMA)** -
 
 The decomposition plot for our Amazon data suggested that there was some seasonality in the time series. This prompted us to use the SARIMA techniques next. The notation for SARIMA model involves specifying the order for the AR(p), I(d), and MA(q) models as parameters to an ARIMA function and AR(P), I(D), MA(Q) and m parameters at the seasonal level, e.g. SARIMA(p, d, q)(P, D, Q)m where “m” is the number of time steps in each season (the seasonal period). 
 
@@ -338,7 +338,7 @@ There appears to be very little difference in the residual plot from SARIMA as c
 
 
 
-* **Prophet** - 
+**Prophet** - 
 
 Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
 
