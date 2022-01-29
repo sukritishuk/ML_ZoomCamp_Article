@@ -342,23 +342,23 @@ There appears to be very little difference in the residual plot from SARIMA as c
 
 Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
 
- * Prophet is a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality. 
- * It considers the effects of holiday quite well and is capable of handling seasonality-related components in data by the use of simple parameters to fine-tune the model like specifying holidays, daily seasonality etc
- * The input for Prophet is a dataframe with two columns, a Date and a target variable column named as - **ds** and **y** respectively.
+  * Prophet is a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality. 
+  * It considers the effects of holiday quite well and is capable of handling seasonality-related components in data by the use of simple parameters to fine-tune the model like     specifying holidays, daily seasonality etc
+  * The input for Prophet is a dataframe with two columns, a Date and a target variable column named as - **ds** and **y** respectively.
 
   ![image](https://user-images.githubusercontent.com/50409210/151583807-582fe6b6-159f-4836-97d9-e7a6cd58d94c.png)
   
-While working with the Prophet algorithm for Amazon time series we undertook the following series of teps:-
+   While working with the Prophet algorithm for Amazon time series we undertook the following series of teps:-
 
-  *  Firstly, we created a **Prophet instance** by specifying the Daily seasonality effects for our time series using the ***daily_seasonality=True parameter***. 
-  *  After this we trained the model and made predictions for 1 year time in future by specifying the ***period parameter=365***. This yielded a DataFrame of forecasts with key parameters as columns ("ds” indicating the Date, “yhat” indicating the predicted time series data, “yhat_lower” and “yhat_upper” indicating the probable lower and upper limit of forecasts).
+   *  Firstly, we created a **Prophet instance** by specifying the Daily seasonality effects for our time series using the ***daily_seasonality=True parameter***. 
+   *  After this we trained the model and made predictions for 1 year time in future by specifying the ***period parameter=365***. This yielded a DataFrame of forecasts with key       parameters as columns ("ds” indicating the Date, “yhat” indicating the predicted time series data, “yhat_lower” and “yhat_upper” indicating the probable lower and upper         limit of forecasts).
   
-  ![image](https://user-images.githubusercontent.com/50409210/151591087-606e2804-441b-48b2-96af-9768c4f5eeb7.png)
+     ![image](https://user-images.githubusercontent.com/50409210/151591087-606e2804-441b-48b2-96af-9768c4f5eeb7.png)
   
-*  Prophet also allowed us to plot different components from our forecasts using the ***plot_components parameter*** thereby showing the trend, yearly weekly and daily plots.
-*  Adding Changepoints is another useful feature in Prophet, as they allow one to put more emphasis and find reasons for changes in trajectory or trends in data. Changepoints are the datetime points where the time series have abrupt changes in the trajectory. By default, Prophet adds 25 changepoints to the initial 80% of the dataset.
+  *  Prophet also allowed us to plot different components from our forecasts using the ***plot_components parameter*** thereby showing the trend, yearly weekly and daily plots.
+  *  Adding Changepoints is another useful feature in Prophet, as they allow one to put more emphasis and find reasons for changes in trajectory or trends in data. Changepoints      are the datetime points where the time series have abrupt changes in the trajectory. By default, Prophet adds 25 changepoints to the initial 80% of the dataset.
 
-![image](https://user-images.githubusercontent.com/50409210/151587907-a0c69115-441c-4f6b-a310-4f190404199f.png)
+     ![image](https://user-images.githubusercontent.com/50409210/151587907-a0c69115-441c-4f6b-a310-4f190404199f.png)
 
 
 
