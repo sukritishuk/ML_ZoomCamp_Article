@@ -342,9 +342,9 @@ There appears to be very little difference in the residual plot from SARIMA as c
 
 Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
 
-* Prophet is a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality. 
-* It considers the effects of holiday quite well and is capable of handling seasonality-related components in data by the use of simple parameters to fine-tune the model like specifying holidays, daily seasonality etc
-* The input for Prophet is a dataframe with two columns, a Date and a target variable column named as - **ds** and **y** respectively.
+ * Prophet is a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality. 
+ * It considers the effects of holiday quite well and is capable of handling seasonality-related components in data by the use of simple parameters to fine-tune the model like specifying holidays, daily seasonality etc
+ * The input for Prophet is a dataframe with two columns, a Date and a target variable column named as - **ds** and **y** respectively.
 
   ![image](https://user-images.githubusercontent.com/50409210/151583807-582fe6b6-159f-4836-97d9-e7a6cd58d94c.png)
   
