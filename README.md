@@ -366,7 +366,7 @@ Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) al
 
 Time series forecasting is the use of a model to predict future values based on previously observed values.
 
-* **Generating In-Sample (One-Step Ahead) Predictions** - 
+**Generating In-Sample (One-Step Ahead) Predictions** - 
   
 This forecasting technique allows us to evaluate how good our model is at predicting just one value ahead. 
 
@@ -378,7 +378,7 @@ This forecasting technique allows us to evaluate how good our model is at predic
 ![image](https://user-images.githubusercontent.com/50409210/151599223-5a0ee67b-65b5-48e8-8550-33bc013179ce.png)
 
 
-* **Generating Dynamic Forecasts** - 
+**Generating Dynamic Forecasts** - 
 
 We can make predictions further than just one step ahead by using dynamic prediction technique. It first predicts one step ahead, and then use this predicted value to forecast the next value after that. 
   * Here, we set the  ***dynamic parameter=True*** in addition to the steps for making one-step ahead predictions. 
@@ -389,7 +389,7 @@ We can make predictions further than just one step ahead by using dynamic predic
 For our dataset, here too we set the start parameter to -30 as we wanted to make dynamic predictions for the last 30 time-periods of the Amazon data.
 
 
-* **Making Out-of-Sample Forecasts** - 
+**Making Out-of-Sample Forecasts** - 
 
 Finally, after testing our predictions in-sample, we can use our model to predict the future. To make future forecasts we use the ***get_forecast method*** of the results object. 
 * We choose the number of steps after the end of the training data to forecast up to by specifying the ***steps parameter***. For making forecasts using Amazon data for the next we used steps=182 in order to forecast for approximately 6 months into the future.
