@@ -120,7 +120,10 @@ Key Concepts about Time Series Analysis -
 * Time series analysis is done only on **continuous variables** and includes Trend Analysis, Forecasting for Cyclical fluctuations or Seasonal patterns. **Trend Analysis** aims to analyze the movements in historical data using visualizations like line plots, bar charts while, **Forecasting** tries to predict the future values with available present & past data.
 
  
+### Slicing Amazon Stock Data for Forecasting - 
 
+* For ease of Stock Forecasting, henceforth we would only be using Amazon Stock price data from the Year **2015 onwards**. 
+* Also, we would be using only the **Adjusted Close** and **Date** columns of our Amazon time series for training different Stock Forecasting techniques or algorithms and making predictions. 
 
 
 ### Testing for Stationarity - 
@@ -128,11 +131,14 @@ Key Concepts about Time Series Analysis -
 Time Series analysis only works with stationary data therefore, we need to determine if our Amazon stock data is stationary or not. A dataset is stationary if its statistical properties like mean, variance, and autocorrelation do not change over time. We need to make the time-series stationary before fitting any model.
 
 Testing for Stationarity can be done using one or more of the following methods:-
-* **Rolling Statistics** - This mathod is a visualization technique where we plot the mean and standard deviation of our time series to determine stationarity. A series becomes stationary if both the mean and standard deviation are flat lines (constant mean and constant variance).  We needed to check this for our Amazon time series as well. From the plots below, we found that there was an increasing mean and standard deviation, indicating that our series was not stationary.
+* **Rolling Statistics** - One of the more popular rolling statistics is the moving average. This takes a moving window of time, and calculates the average or the mean of that time period as the current value. Visualizing the rolling statistics for our time series will help us determine stationarity. A series becomes stationary if both the mean and standard deviation are flat lines (constant mean and constant variance).  
 
-![image](https://user-images.githubusercontent.com/50409210/151359702-8330f044-5174-4d6a-8fa2-bc2722c12f5d.png)
+We needed to check this for our Amazon time series as well so calculated and visualized the mean and standard deviation of Adjusted Close price for a 12-day window. Moving Standard Deviation is a statistical measurement of market volatility. The rolling standard deviation plot appears to be quite smooth in the beginning (2015-17 end) but becomes little volatile after 2018. In 2019 and end of 2020 there are some large movements. The rolling mean fits the original data for Amazon Adjusted Close quite closely.
 
-However, to be more sure about stationarity or not for our Amazon time series we used the ADF test method as well as explained below.
+  ![image](https://user-images.githubusercontent.com/50409210/151359702-8330f044-5174-4d6a-8fa2-bc2722c12f5d.png)
+
+From the plots above, we found that there was an increasing mean and standard deviation, indicating that our series was not stationary. However, to be more sure about stationarity or not for our Amazon time series we used the ADF test method as well as explained below.
+
 
 * **Augmented Dicky-Fuller (ADF) Test** - The ADF Test is one of the most common tests for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend. If the null hypothesis is not rejected, the series is said to be non-stationary. The result object of the ADF test is a tuple with following key elements:
 
@@ -140,11 +146,13 @@ However, to be more sure about stationarity or not for our Amazon time series we
      * Next element - **p-value** (if p-value < 0.05, we reject the H0 and assume our time series to be stationary)
      * Last element - **a Python Dictionary with critical values** of the test statistic equating to different p-values
 
-By performing ADF test for Amazon stock data we ran a test for statistical significance to determine whether it was staionary or not, with different levels of confidence and got the following outputs.
+We performed an ADF test for Amazon stock data and ran a test for different statistical significance to determine whether it was staionary or not. We got the following test results:-
 
 ![image](https://user-images.githubusercontent.com/50409210/151357493-7c6aa93b-99ab-4495-ba45-5d8d0be35a6a.png)
 
-As we can see from the test results that our Test statistic was a positive value and our p-value > 0.05.  Additionally, the test statistics exceeded the critical values hence, the data was nonlinear and we did not reject the Null Hypothesis (H0). Thus, by using both the rolling statistic plots and ADF test results we determined that our **Amazon stock price data was Non-Stationary**. Next, we had to work towards making our time series stationary before applying any Machine Learning modelling techniques.
+We can see from the results above that our Test statistic was a positive value and our p-value > 0.05.  Additionally, the test statistics exceeded the critical values hence, the data was nonlinear. We did not reject our null hypothesis, and realized that Amazon time series was non-stationary. 
+
+Thus, by using both methods, plotting the rolling statistics and analyzing ADF test results we determined that our **Amazon time series was Non-Stationary**. Next, we had to work towards making our time series stationary before applying any Machine Learning modelling techniques.
 
 
  ### Making a Time Series Stationary  - 
@@ -159,10 +167,9 @@ The ADF test results on de-trended stock data for Amazon below, shows a p=value 
 
 ![image](https://user-images.githubusercontent.com/50409210/151385463-0e6bc76f-8005-4ace-9cd2-e7bbdaf22a79.png)
 
-In addition to this, on plotting the rolling statistics for the de-trended Amazon stock (see below) further shows that the time series has become stationary. This is indicated by the relative smoothness of the rolling mean and rolling standard deviation compared to the original De-trended data.
+On plotting the rolling statistics for the de-trended Amazon stock (see below) further shows that the time series has become stationary. This is indicated by the relative smoothness of the rolling mean and rolling standard deviation compared to the original De-trended Amazon data.
 
-![image](https://user-images.githubusercontent.com/50409210/151386719-78eaddc9-40dd-40b3-8fb7-564a240a8b5f.png)
-
+![image](https://user-images.githubusercontent.com/50409210/151700801-3c67db0b-a6d2-489e-a97d-bdb34c41e778.png)
 
  * **Differencing the time series** - Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence. 
     
@@ -185,6 +192,7 @@ As an experiment, we also took a **second order of differencing** for our Amazon
 
 Both the 1st Order and 2nd Order of Differencing yielded very small p-values and also very negative test statistics. For the above plots of ACF and PACF, we found that the time series reaches stationarity with two orders of differencing. But on looking at the PACF plot for the 2nd differencing the lag goes into the negative zone very quickly. This indicates that the Amazon stock series might get over-differenced with 2nd order differencing. So, to avoid over-differencing, we restricted the **Order of Differencing** for our dataset to **d = 1**.
 
+By looking at the EDA for Amazon time series we could not be very sure about seasonality in the data. This can only be found if we decompose our time series. So, next we look into seasonal elements in our dataset.
 
  ### Seasonal Decomposition of a Time Series - 
  
@@ -208,7 +216,8 @@ We decomposed our Amazon time series using statsmodel's seasonal_decompose() fun
 
 We could see from the decomposition plot that our Amazon stock data has both trend and seasonality. The pattern of trend is positive and increasing in nature however, the seasonality pattern does not appear to be very clear from this decomposition plot.
 
- 
+As we know that there is some seasonality in our Amazon time series we would use seasonal orders also while fitting different algorithms to our dataset. But before that we first need to select optimal orders for our dataset both seasonal and non-seasonal.
+
 
 ### Selection of Non-seasonal and Seasonal Orders -
 
@@ -239,7 +248,7 @@ For our Amazon time series, we manually tried to select orders by writing for lo
 
 We used this same process to select the following order types:- 
 
-* **Finding only the  optimal Non-Seasonal Orders (p,d,q)** - This resulted in giving us the lowest AIC and BIC values for our Amazon stock data by setting the order values to **p=2, d=1 and q=2**. 
+* **Finding only the optimal Non-Seasonal Orders (p,d,q)** - This resulted in giving us the lowest AIC and BIC values for our Amazon stock data by setting the order values to **p=2, d=1 and q=2**. 
 * **Finding only the optimal Seasonal Orders (P,D,Q)** - We already pre-defined our length of seasonal cycle (S) as 7, as the seasonlity of our Amazon time series appeared to be daily, We also pre-defined our non-seasonal orders to be p=2, d=1, q=2 (results from our last order selection). From the results, lowest AIC and BIC values were yielded by setting the seasonal order values to **P=0, D=1 and Q=2**.
 * **Finding both Non-seasonal (p,d, q) and Seasonal (P,D,Q) Orders** - Here, we had already pre-defined our length of seasonal cycle or S = 7, d = 1 and D = 1. It resulted in yielding the folowing:- 
 
@@ -311,7 +320,7 @@ Model results from each of the models selected and used for Amazon time series w
 
 ### Splitting the Dataset for Time Series Analysis - 
 
-Splitting the dataset is an important exerise before selecting and fitting machine learning algorithms on any dataset. For time series analysis, the split in dataset would be slightly different from other cases where we try to split datasets randomly into train-test subsets. Here, as we would be using past values to make future predictions, we would be splitting the data in relation to time. Thus, we would be training our algorithms on the data coming earlier in the time series and testing on data that comes later. 
+Splitting the dataset is an important exerise before selecting and fitting machine learning algorithms on any dataset. For time series analysis, the split in dataset would be slightly different from other cases where we try to split datasets randomly into train-test subsets. Here, as we would be using past values to make future predictions hence, we would be splitting the data in relation to time i.e., training our algorithms on data coming earlier in time series and testing on data that comes later. 
 
 ![image](https://user-images.githubusercontent.com/50409210/151556040-343ff83f-f9d1-455f-9156-e0c88452bc5d.png)
 
