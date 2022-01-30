@@ -138,7 +138,7 @@ Testing for Stationarity can be done using one or more of the following methods:
 
 We needed to check this for our Amazon time series as well so calculated and visualized the mean and standard deviation of Adjusted Close price for a 12-day window. Moving Standard Deviation is a statistical measurement of market volatility. The rolling standard deviation plot appears to be quite smooth in the beginning (2015-17 end) but becomes little volatile after 2018. In 2019 and end of 2020 there are some large movements. The rolling mean fits the original data for Amazon Adjusted Close quite closely.
 
-  ![image](https://user-images.githubusercontent.com/50409210/151359702-8330f044-5174-4d6a-8fa2-bc2722c12f5d.png)
+  ![image](https://user-images.githubusercontent.com/50409210/151713977-fef5d7b1-ab0f-4b65-a2d4-6f592e99a3dd.png)
 
 From the plots above, we found that there was an increasing mean and standard deviation, indicating that our series was not stationary. However, to be more sure about stationarity or not for our Amazon time series we used the ADF test method as well as explained below.
 
