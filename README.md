@@ -349,6 +349,7 @@ Some deep learning-based techniques include **Long-short term memory(LSTM)**.
 For analyzing Amazon stock time series I used the following Time Series Analysis techniques:-
 
 **Autoregressive Integrated Moving Average (ARIMA)** - 
+
     * It is used to predict the future values of a time series using its past values and forecast errors.
     * Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
     * We can also implement an ARIMA model using the SARIMAX model class from statsmodels.
