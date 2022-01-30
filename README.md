@@ -1,4 +1,4 @@
-## MLZoomCamp Article
+## ML_ZoomCamp Article
 
 # **Amazon Stock Price Prediction using Time Series Forecasting**
 
