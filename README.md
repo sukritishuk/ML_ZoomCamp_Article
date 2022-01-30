@@ -9,8 +9,8 @@ Time has always been a key factor in statistical analysis because of its quantif
 
 In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting in Python**. Time series analysis in Python uses timestamps, time deltas, and time periods for plotting time series data. My goal was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data. 
 
-![image](https://user-images.githubusercontent.com/50409210/151714844-d17f6089-80e5-4cc4-82ac-83cce7c1b540.png)
-[Image Credit](https://www.simplilearn.com/tutorials/python-tutorial/time-series-analysis-in-python)
+                            ![image](https://user-images.githubusercontent.com/50409210/151714844-d17f6089-80e5-4cc4-82ac-83cce7c1b540.png)
+                                 [Image Credit](https://www.simplilearn.com/tutorials/python-tutorial/time-series-analysis-in-python)
 
 Steps for making Amazon Stock Forecasting -
 
