@@ -349,19 +349,20 @@ Some deep learning-based techniques include **Long-short term memory(LSTM)**.
 For analyzing Amazon stock time series I used the following Time Series Analysis techniques:-
 
 **Autoregressive Integrated Moving Average (ARIMA)** - 
+  
+  * It is used to predict the future values of a time series using its past values and forecast errors.
+  * Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
+  * We can also implement an ARIMA model using the SARIMAX model class from statsmodels.
+   * ARIMA model has three model orders - p the autoregressive order; d the order of differencing; and q the moving average order
+  
+Manual selection of model orders on Amazon time series yielded lowest AIC and BIC values by setting the non-seasonal order values to **p=2, d=1 and q=2**. These were used to fit an ARIMA(2,1,2) model on our training subset. The folowing summary results and residual diagnostic plots were outputed from this model.
+  
+![image](https://user-images.githubusercontent.com/50409210/151714219-823c3192-af13-4a04-a20b-81e6c47628e7.png)
 
-    * It is used to predict the future values of a time series using its past values and forecast errors.
-    * Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
-    * We can also implement an ARIMA model using the SARIMAX model class from statsmodels.
-    * ARIMA model has three model orders - p the autoregressive order; d the order of differencing; and q the moving average order
-  
-Manual selection of model orders on Amazon time series yielded lowest AIC and BIC values by setting the non-seasonal order values to **p=2, d=1 and q=2**. These were used to fit an ARIMA(2,1,2) model on our dataset. The folowing summary results and residual diagnostic plots were outputed from this model.
-  
-![image](https://user-images.githubusercontent.com/50409210/151575176-06b449ad-c1bf-4ad0-b001-9720f7f7128a.png)
 
 The JB p-value or Prob(JB) is zero, which means we should reject the null hypothesis that the residuals are normally distributed.
 
-![image](https://user-images.githubusercontent.com/50409210/151575262-78ddcd2d-8ea2-4df1-ad48-1b02d9ec6487.png)
+![image](https://user-images.githubusercontent.com/50409210/151714232-67a5c4d4-13de-4dff-a441-c839bcc6fee3.png)
 
 There are some obvious patterns in the residuals plot towards the right end of the plot. The KDE curve is not very similar to the normal distribution plot. Most of the data points do not lie on the red line as shown by the histogram and Q-Q plots. In the last plot is the correlogram, which is just an ACF plot of the residuals 95% of the correlations for lag greater than zero should not be significant and they appear to be not significant here as well.
 
@@ -374,11 +375,13 @@ The decomposition plot for our Amazon data suggested that there was some seasona
 
 Although, manual selection of orders yielded SARIMA(0,1,1)(0,1,1,7) for Amazon time series instead of using these parameters to fit our model we fittied the SARIMA model, using auto_arima function of the pmdarima package.  As we can see below, the most optimal orders selected from here were **p=2, d=1, q=2, P=0, D=0, Q=2, S or m=7**.
 
-![image](https://user-images.githubusercontent.com/50409210/151579043-f744850b-5720-4c9f-b730-953b07c7893d.png)
+![image](https://user-images.githubusercontent.com/50409210/151714263-549e124f-20e6-4cff-8395-f2eaf0e984d4.png)
+
+![image](https://user-images.githubusercontent.com/50409210/151714253-257db7f0-40e0-4684-a30a-901639b12ed1.png)
 
 The summary result above shows, that the model does not meet the condition of no correlation (independence in the residuals) because the p-value of the Ljung-Box test Prob(Q) is greater than 0.05, so we cannot reject the null hypothesis of independence. Also, we cannot say that the residual distribution is having constant variance (homoscedastic) because the p-value of the Heteroskedasticity test Prob(H) is smaller than 0.05.
 
-![image](https://user-images.githubusercontent.com/50409210/151580269-27bdf8f7-ffa8-4c86-a8b0-6fdae40fac11.png)
+![image](https://user-images.githubusercontent.com/50409210/151714282-ce214044-23c7-4bc9-8948-df92674e6a4a.png)
 
 There appears to be very little difference in the residual plot from SARIMA as compared to that from ARIMA.
 
