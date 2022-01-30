@@ -74,7 +74,10 @@ As the Amazon stock dataset had no missing values in any columns no imputations 
 
 Now, that we had our dataset cleaned and formatted we carried out some basic Exploratory data analysis on our Amazon stock dataset.
 
-* Amazon Close prices show very steep rise during the period after 2016 however, its volume have declined from 2000 or 2008 levels when they were at peak.
+* Amazon's Closing (adusted) Price show very steep rise during the period after 2016 however, its Volumes have declined from 2000 or 2008 levels when they were at peak.
+  
+  ![image](https://user-images.githubusercontent.com/50409210/151713881-263a10c8-8939-4e48-aec2-832cf1d612c3.png)
+ 
 * Both the 50-day and 200-day Moving Average for Amazon shows a fairly smoothed but rising in Daily adjusted closing price.
 
   ![image](https://user-images.githubusercontent.com/50409210/151674901-950f0f48-fbb4-4896-8d28-4db07a7f28dc.png)
