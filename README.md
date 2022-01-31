@@ -116,7 +116,7 @@ The Close-High feature shows the maximum positive correlation with the Volume fe
 
 
  
-## Slicing Amazon Stock Data for Forecasting - 
+## Slicing Amazon Stock Dataset for Forecasting - 
 
 * For ease of Stock Forecasting, henceforth we would only be using Amazon Stock price data from the Year **2015 onwards**. 
 * Also, we would be using only the **Adjusted Close** and **Date** columns of our Amazon time series for training different Stock Forecasting techniques or algorithms and making predictions. 
