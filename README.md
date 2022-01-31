@@ -2,18 +2,17 @@
 
 # **Amazon Stock Price Prediction using Time Series Forecasting**
 
-## Introduction:
 
 Time has always been a key factor in statistical analysis because of its quantifiable and ever-changing nature and its impact on our daily lives. Today, it has become all the more important in both financial & non-financial contexts with the emergence of real-time Data and real-time Analytics. In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. In Python uses timestamps, time deltas, and time periods for plotting time series data.
 
 Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic Time Series Analysis & Forecasting in Python.  My goal here, was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data.
 
 
-Steps for making Amazon Stock Forecasting -
+Steps Taken for making Amazon Stock Forecasting -
 
-* Key Concepts about Time-specific Data
-* Key Concepts about Time Series Analysis
-* Sources of Data
+* [Key Concepts about Time-specific Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data--)
+* [Key Concepts about Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-series-analysis--)
+* [Sources of Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#sources-of-data--)
 * Data Preparation - 
 
    * Loading & Studying the Data 
