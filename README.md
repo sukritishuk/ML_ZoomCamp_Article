@@ -127,8 +127,12 @@ The Close-High feature shows the maximum positive correlation with the Volume fe
 Time Series analysis only works with stationary data therefore, we need to determine if our Amazon stock data is stationary or not. A dataset is stationary if its statistical properties like mean, variance, and autocorrelation do not change over time. We need to make the time-series stationary before fitting any model.
 
 Testing for Stationarity can be done using one or more of the following methods:-
+* Rolling Statistics
+* Augmented Dicky-Fuller (ADF) Test
 
-* **Rolling Statistics** - One of the more popular rolling statistics is the moving average. This takes a moving window of time, and calculates the average or the mean of that time period as the current value. Visualizing the rolling statistics for our time series will help us determine stationarity. A series becomes stationary if both the mean and standard deviation are flat lines (constant mean and constant variance).  
+### Rolling Statistics:
+
+One of the more popular rolling statistics is the moving average. This takes a moving window of time, and calculates the average or the mean of that time period as the current value. Visualizing the rolling statistics for our time series will help us determine stationarity. A series becomes stationary if both the mean and standard deviation are flat lines (constant mean and constant variance).  
 
 We needed to check this for our Amazon time series as well so calculated and visualized the mean and standard deviation of Adjusted Close price for a 12-day window. Moving Standard Deviation is a statistical measurement of market volatility. The rolling standard deviation plot appears to be quite smooth in the beginning (2015-17 end) but becomes little volatile after 2018. In 2019 and end of 2020 there are some large movements. The rolling mean fits the original data for Amazon Adjusted Close quite closely.
 
@@ -137,7 +141,9 @@ We needed to check this for our Amazon time series as well so calculated and vis
 From the plots above, we found that there was an increasing mean and standard deviation, indicating that our series was not stationary. However, to be more sure about stationarity or not for our Amazon time series we used the ADF test method as well as explained below.
 
 
-* **Augmented Dicky-Fuller (ADF) Test** - The ADF Test is one of the most common tests for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend. If the null hypothesis is not rejected, the series is said to be non-stationary. The result object of the ADF test is a tuple with following key elements:
+### Augmented Dicky-Fuller (ADF) Test:
+
+The ADF Test is one of the most common tests for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend. If the null hypothesis is not rejected, the series is said to be non-stationary. The result object of the ADF test is a tuple with following key elements:
 
      * Zeroth element - **Test statistic** (the more negative this number is, the more likely that data is stationary) 
      * Next element - **p-value** (if p-value < 0.05, we reject the H0 and assume our time series to be stationary)
@@ -152,13 +158,18 @@ We can see from the results above that our Test statistic was a positive value a
 Thus, by using both methods, plotting the rolling statistics and analyzing ADF test results we determined that our **Amazon time series was Non-Stationary**. Next, we had to work towards making our time series stationary before applying any Machine Learning modelling techniques.
 
 
+
  ## Making a Time Series Stationary  - 
  
  As we discussed earlier, to proceed with any time series analysis using models, we needed to stationarize our Amazon stock time series. 
  
  If the time series is non-stationary the below methods can be used to make them stationary:-
+ * De-trending the time series
+ * Differencing the time series
  
- * **De-trending the time series** - This method removes the underlying trend in the time series by standardizing it. It subtracts the mean and divides the result by the standard deviation of the data sample. This has the effect of transforming the data to have mean of zero, or centered, with a standard deviation of 1. Then the ADF test is performed on the de-trended time series to confirm the results.
+### De-trending the time series:
+
+This method removes the underlying trend in the time series by standardizing it. It subtracts the mean and divides the result by the standard deviation of the data sample. This has the effect of transforming the data to have mean of zero, or centered, with a standard deviation of 1. Then the ADF test is performed on the de-trended time series to confirm the results.
 
 The ADF test results on de-trended stock data for Amazon below, shows a p=value < 0.05 and also a negative Test statistic, which means that the Amazon time series has become stationary now.
 
@@ -168,7 +179,9 @@ On plotting the rolling statistics for the de-trended Amazon stock (see below) f
 
 ![image](https://user-images.githubusercontent.com/50409210/151700801-3c67db0b-a6d2-489e-a97d-bdb34c41e778.png)
 
- * **Differencing the time series** - Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence. 
+### Differencing the time series:
+
+Another widely used method to make a time series stationary is Differencing. This method removes the underlying seasonal or cyclical patterns in the time series thereby removing the series' dependence on time also-called temporal dependence. 
     
    Following are some key concepts regarding Differencing:-
 
@@ -191,7 +204,8 @@ Both the 1st Order and 2nd Order of Differencing yielded very small p-values and
 
 By looking at the EDA for Amazon time series we could not be very sure about seasonality in the data. This can only be found if we decompose our time series. So, next we look into seasonal elements in our dataset.
 
- ## Seasonal Decomposition of a Time Series - 
+
+## Seasonal Decomposition of a Time Series - 
  
 A seasonal time series generally has some predictable patterns that repeat regularly (i.e., after any length of time). 
 
@@ -216,9 +230,10 @@ We could see from the decomposition plot that our Amazon stock data has both tre
 As we know that there is some seasonality in our Amazon time series we would use seasonal orders also while fitting different algorithms to our dataset. But before that we first need to select optimal orders for our dataset both seasonal and non-seasonal.
 
 
+
 ## Selection of Non-seasonal and Seasonal Orders -
 
-### Model orders - 
+### Model orders:
 
 When fitting and working with AR, MA, ARMA or SARIMA models, it is very important to understand the model order. We need to pick the most optimal model order before fitting our time series to a model inorder to make better predictions. 
 
@@ -233,13 +248,13 @@ When fitting and working with AR, MA, ARMA or SARIMA models, it is very importan
   * **Non-seasonal orders** - autoregressive order (p), order of differencing (d) and moving average order (q)
   * **Seasonal orders** - autoregressive order (P), order of differencing (D), moving average order (Q) and a new order (S), which is the length of the seasonal cycle.
 
-### Choosing Model Orders - 
+### Choosing Model Orders: 
 
 * **Using ACF and PACF plots** - One of the main ways to identify the correct model order is by using the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF). By comparing the ACF and PACF for a time series we can deduce the model order. The time series must be made stationary before making these plots.
 * **Using AIC and BIC values** - The Akaike Information Criterion (AIC), is a metric which tells us how good a model is. The Bayesian Information Criterion (BIC), is very similar to the AIC. Models which fit the data better have lower AICs and BICs, while BIC penalizes overly complex models. Mostly, both AIC and BIC will choose the same model. These can be found on the right side of the summary of the fitted-models-results object or by using the ***.aic attribute*** and the ***.bic attribute***.
 
 
-a) Manual Selection of Orders - 
+**a) Manual Selection of Orders:-
 
 For our Amazon time series, we manually tried to select orders by writing for loops. We tried to fit models with multiple order combinations, extracted the AIC and BIC values for each combination of orders and then selected the order yielding the lowest AIC value. We found that the BIC score for the same order also turned out to be the lowest in almost every case. 
 
@@ -255,7 +270,7 @@ We used this same process to select the following order types:-
   * Seasonal Orders - P = 0, D = 1 and Q = 1
 
 
-b) Automated Selection of Orders - 
+**b) Automated Selection of Orders:- 
 
 The [pmdarima package](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html), automatically discovers the optimal order for an ARIMA model. The ***auto_arima function*** from this package loops over model orders to find the best one. We used this method also to choose our most optimal model orders. he auto-arima function has a lot of parameters that we may want to set. Many of these have default values and the only required argument to the function is the data. Optionally we can also set the order of non-seasonal differencing; initial estimates of the non-seasonal orders; and the maximum values of non-seasonal orders to test.
 
@@ -342,7 +357,7 @@ Some deep learning-based techniques include **Long-short term memory(LSTM)**.
 
 For analyzing Amazon stock time series I used the following Time Series Analysis techniques:-
 
-**Autoregressive Integrated Moving Average (ARIMA)** - 
+### Autoregressive Integrated Moving Average (ARIMA):
   
   * It is used to predict the future values of a time series using its past values and forecast errors.
   * Very popular statistical method for time series forecasting and capable of predicting short-term share market movements.
@@ -363,7 +378,7 @@ There are some obvious patterns in the residuals plot towards the right end of t
 Both these output interpretations above, suggest that our ARiMA(2,1,2) model does not fit our Amazon stock data too well yet.
 
 
-**Seasonal Autoregressive Integrated Moving-Average (SARIMA)** -
+### Seasonal Autoregressive Integrated Moving-Average (SARIMA):
 
 The decomposition plot for our Amazon data suggested that there was some seasonality in the time series. This prompted us to use the SARIMA techniques next. The notation for SARIMA model involves specifying the order for the AR(p), I(d), and MA(q) models as parameters to an ARIMA function and AR(P), I(D), MA(Q) and m parameters at the seasonal level, e.g. SARIMA(p, d, q)(P, D, Q)m where “m” is the number of time steps in each season (the seasonal period). 
 
@@ -380,19 +395,7 @@ The summary result above shows, that the model does not meet the condition of no
 There appears to be very little difference in the residual plot from SARIMA as compared to that from ARIMA.
 
 
-
-## Making Predictions from Most Optimal Model on Unseen Data (testing subset) - 
-
-Although, training both **ARIMA(2,1,2)** and **SARIMA(2,1,2)(0,0,2,7)** on the training subset of Amazon series yielded very similar summary results and diagnostic plots, the SARIMA model seems to be a better fit for our dataset because it has seasonal orders hence, takes into account some seasonality in our data.
-
-Next, we used the **SARIMA(2,1,2)(0,0,2,7)**, to fit to the training set and make predictions on the testing set i.e., our unseen time series for Amazon. 
-
-![image](https://user-images.githubusercontent.com/50409210/151714737-2a297e0a-12aa-497c-adb1-6224e2d6f2b3.png)
-
-From the above plot, we find that this model SARIMA(2,1,2)(0,0,2,7) performs fairly well in making prediction about Amazon time series testing subset. Now we would put this model into practice to make future or out-of-sample forecasts as well.
-
-
-**Prophet** - 
+  ### Prophet by Facebook:
 
 Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
 
@@ -415,12 +418,22 @@ Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) al
      ![image](https://user-images.githubusercontent.com/50409210/151587907-a0c69115-441c-4f6b-a310-4f190404199f.png)
 
 
+## Making Predictions from Most Optimal Model regarding Testing Set (unseen data) - 
+
+Although, training both **ARIMA(2,1,2)** and **SARIMA(2,1,2)(0,0,2,7)** on the training subset of Amazon series yielded very similar summary results and diagnostic plots, the SARIMA model seems to be a better fit for our dataset because it has seasonal orders hence, takes into account some seasonality in our data.
+
+Next, we used the **SARIMA(2,1,2)(0,0,2,7)**, to fit to the training set and make predictions on the testing set i.e., our unseen time series for Amazon. 
+
+![image](https://user-images.githubusercontent.com/50409210/151714737-2a297e0a-12aa-497c-adb1-6224e2d6f2b3.png)
+
+From the above plot, we find that this model SARIMA(2,1,2)(0,0,2,7) performs fairly well in making prediction about Amazon time series testing subset. Now we would put this model into practice to make future or out-of-sample forecasts as well.
+
 
 ## Time Series Forecasting -
 
 Time series forecasting is the use of a model to predict future values based on previously observed values.
 
-**Generating In-Sample (One-Step Ahead) Predictions** - 
+### Generating In-Sample (One-Step Ahead) Predictions:
   
 This forecasting technique allows us to evaluate how good our model is at predicting just one value ahead. 
 
@@ -432,7 +445,7 @@ This forecasting technique allows us to evaluate how good our model is at predic
 ![image](https://user-images.githubusercontent.com/50409210/151714373-5c16c06c-ac16-4c44-880a-4c628355770f.png)
 
 
-**Generating Dynamic Forecasts** - 
+### Generating Dynamic Forecasts: 
 
 We can make predictions further than just one step ahead by using dynamic prediction technique. It first predicts one step ahead, and then use this predicted value to forecast the next value after that. 
   * Here, we set the  ***dynamic parameter=True*** in addition to the steps for making one-step ahead predictions. 
@@ -443,7 +456,7 @@ We can make predictions further than just one step ahead by using dynamic predic
 For our dataset, here too we set the start parameter to -30 as we wanted to make dynamic predictions for the last 30 time-periods of the Amazon data.
 
 
-**Making Out-of-Sample Forecasts** - 
+### Making Out-of-Sample Forecasts:
 
 Finally, after testing our predictions in-sample, we can use our model to predict the future. To make future forecasts we use the ***get_forecast method*** of the results object. 
 * We choose the number of steps after the end of the training data to forecast up to by specifying the ***steps parameter***. For making forecasts using Amazon data for the next we used steps=182 in order to forecast for approximately 6 months into the future.
