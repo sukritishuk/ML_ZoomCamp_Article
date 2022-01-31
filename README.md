@@ -6,13 +6,17 @@
 
 Time has always been a key factor in statistical analysis because of its quantifiable and ever-changing nature and its impact on our daily lives. Today, it has become all the more important in both financial & non-financial contexts with the emergence of real-time Data and real-time Analytics. 
 
-
-In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting in Python**. Time series analysis in Python uses timestamps, time deltas, and time periods for plotting time series data. My goal was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data. 
+      In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting in Python**. Time series analysis in Python uses timestamps, time deltas, and time periods for plotting time series data. My goal was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data. 
 
 Steps for making Amazon Stock Forecasting -
 
-* Loading & Studying the Data 
-* Data Cleaning and Formatting - Changing data types, Missing Values Detection, Feature Engineering
+* Key Concepts about Time-specific Data
+* Key Concepts about Time Series Analysis
+* Sources of Data
+* Data Preparation - 
+
+   * Loading & Studying the Data 
+   * Data Cleaning and Formatting - Changing data types, Missing Values Detection, Feature Engineering
 * Exploratory Data Analysis (EDA) of Time Series - Correlation, Moving Averages, Percentage Change in Stocks, Resampling 
 * Slicing Amazon Stock Data for Forecasting 
 * Testing for Stationarity 
@@ -33,13 +37,41 @@ Steps for making Amazon Stock Forecasting -
     * Making Out-of-Sample Forecasts for Amazon stocks 
 
 
+Before we move on to Time Series Analysis of Amazon Stock and using different Forecasting techniques to make predictions, let me first explain some key concepts about time-related data in general and time series analysis.
 
-### Sources of Data -
+
+## Key Concepts about Time-specific Data -
+
+* **TimeStamp** references a particular moment in time (e.g., January 4th, 2022 at 7:00am). **Time Intervals and Periods** reference a length of time between a particular beginning and end point. **Time deltas or durations** refer to an exact length of time, between two dates or times.
+* **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Hours, Minutes, and Seconds. Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
+* **Trends** involve a gradual increase or decrease in time series data like a rise in death rates due to outbreak of a deadly disease.
+* **Seasonality** occurs in time series when a trend is periodically repeating itself e.g., increase in sale of home decorations around Christmas season. 
+* **Stationarity** of time series means that the distribution of the data in here, doesn't change with time i.e., the series must have zero trend, constant variance & constant autocorrelation. Absence, of any of these 3 conditions makes it **Non-Stationary**. 
+* **Rolling or Moving Aggregations** on data involves performing aggregations like average or sum of data, using a moving window over the entire dataset.
+* **Resampling** of time series data is common to ease anaysis and improve visualizations. It involves converting data to a higher or lower frequency like daily data to monthly or yearly.
+
+
+## Key Concepts about Time Series Analysis -
+
+* **Time Series Analysis** involves studying what changes are made in the economic asset or concerned variable during a period of time (e.g. price of gold, birth rates, rainfall levels etc.). It also studies the influence of time over other variables in data.
+* Characteristics in time series data like **seasonality, structural breaks, trends and cyclicity**, often differ from other types of data therefore, require unique set of tools and techniques for analysis.
+* A time series includes three systematic components: **Level, Trend, and Seasonality**, as well as one non-systematic component termed **Noise**.
+
+  a) Level - average value in the series
+  b) Trend - increasing or falling value in the series
+  c) Seasonality - short-term recurring movements in series
+  d) Noise - random variance in series
+  
+* Time Series Analysis & modelling of time-specific data can be done only on Stationary time series.  
+* Time series analysis is done only on **continuous variables** and includes Trend Analysis, Forecasting for Cyclical fluctuations or Seasonal patterns. **Trend Analysis** aims to analyze the movements in historical data using visualizations like line plots, bar charts while, **Forecasting** tries to predict the future values with available present & past data.
+
+
+## Sources of Data -
 
 I retrieved Amazon Stock data from Kaggle Public Dataset - [FAANG- Complete Stock Data](https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data). The data was available as a csv file (*Amazon.csv*). The data contained all the relevant data such as Opening price, Closing price, Volumes of stock traded about the Amazon stock from 1997 to 2020.
 
 
-### Data Preparation - 
+## Data Preparation - 
 
 **Loading & Studying the Data:**
 
@@ -68,70 +100,44 @@ As the Amazon stock dataset had no missing values in any columns no imputations 
 ![image](https://user-images.githubusercontent.com/50409210/151671634-deddae70-1374-4fc2-915e-25e6093f6d6c.png)
 
 
-### Exploratory Data Analysis (EDA) of Time Series -
+## Exploratory Data Analysis (EDA) of Time Series -
 
 Now, that we had our dataset cleaned and formatted we carried out some basic Exploratory data analysis on our Amazon stock dataset.
 
-* Amazon's Closing (adusted) Price show very steep rise during the period after 2016 however, its Volumes have declined from 2000 or 2008 levels when they were at peak.
+Amazon's Closing (adusted) Price show very steep rise during the period after 2016 however, its Volumes have declined from 2000 or 2008 levels when they were at peak.
   
   ![image](https://user-images.githubusercontent.com/50409210/151713881-263a10c8-8939-4e48-aec2-832cf1d612c3.png)
  
-* Both the 50-day and 200-day Moving Average for Amazon shows a fairly smoothed but rising in Daily adjusted closing price.
+Both the 50-day and 200-day Moving Average for Amazon shows a fairly smoothed but rising in Daily adjusted closing price.
 
   ![image](https://user-images.githubusercontent.com/50409210/151674901-950f0f48-fbb4-4896-8d28-4db07a7f28dc.png)
   
-* The movements in Amazon stock have reduced over time as we can see small percentage change (increase or decrease) in stock value 2016 onwards compared to that in the 2000s.
+The movements in Amazon stock have reduced over time as we can see small percentage change (increase or decrease) in stock value 2016 onwards compared to that in the 2000s.
   
   ![image](https://user-images.githubusercontent.com/50409210/151675037-0ffa48a1-21ce-4aec-9cd7-9c4d464e8841.png)
   
-* Amazon stock volumes appear to be the largest on Wednesday and Thursday while almost Nil on weekends (Saturday, Sunday). This is due to no trading on weekends. Also the January appears to be the highest month for trades in Amazon stocks followed by July, october and November compared to August which has the lowest. 
+Amazon stock volumes appear to be the largest on Wednesday and Thursday while almost Nil on weekends (Saturday, Sunday). This is due to no trading on weekends. Also the January appears to be the highest month for trades in Amazon stocks followed by July, october and November compared to August which has the lowest. 
 
   ![image](https://user-images.githubusercontent.com/50409210/151675266-0d9c80ca-6921-4996-bb40-9f18f598ed5f.png)
   
- * The Close-High feature shows the maximum positive correlation with the Volume feature. We can say that if the Amazon Closing price stays away from High value, it may lead to more transactions or trading volumes that day for the stock. However, many other factors would also be influencing the trading volumes for a stock per day.
+The Close-High feature shows the maximum positive correlation with the Volume feature. We can say that if the Amazon Closing price stays away from High value, it may lead to more transactions or trading volumes that day for the stock. However, many other factors would also be influencing the trading volumes for a stock per day.
  
   ![image](https://user-images.githubusercontent.com/50409210/151675419-4490f38d-652b-47e7-b8be-9d6dab70c664.png)
 
 
-Before we move on to Time Series Analysis and Forecasting techniques let me explain some key concepts about time series analysis and time-related data in general.
-
-Key Concepts about Time-specific Data -
-
-* **TimeStamp** references a particular moment in time (e.g., January 4th, 2022 at 7:00am). **Time Intervals and Periods** reference a length of time between a particular beginning and end point. **Time deltas or durations** refer to an exact length of time, between two dates or times.
-* **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Hours, Minutes, and Seconds. Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
-* **Trends** involve a gradual increase or decrease in time series data like a rise in death rates due to outbreak of a deadly disease.
-* **Seasonality** occurs in time series when a trend is periodically repeating itself e.g., increase in sale of home decorations around Christmas season. 
-* **Stationarity** of time series means that the distribution of the data in here, doesn't change with time i.e., the series must have zero trend, constant variance & constant autocorrelation. Absence, of any of these 3 conditions makes it **Non-Stationary**. 
-* **Rolling or Moving Aggregations** on data involves performing aggregations like average or sum of data, using a moving window over the entire dataset.
-* **Resampling** of time series data is common to ease anaysis and improve visualizations. It involves converting data to a higher or lower frequency like daily data to monthly or yearly.
-
-
-Key Concepts about Time Series Analysis -
-
-* **Time Series Analysis** involves studying what changes are made in the economic asset or concerned variable during a period of time (e.g. price of gold, birth rates, rainfall levels etc.). It also studies the influence of time over other variables in data.
-* Characteristics in time series data like **seasonality, structural breaks, trends and cyclicity**, often differ from other types of data therefore, require unique set of tools and techniques for analysis.
-* A time series includes three systematic components: **Level, Trend, and Seasonality**, as well as one non-systematic component termed **Noise**.
-
-  a) Level - average value in the series
-  b) Trend - increasing or falling value in the series
-  c) Seasonality - short-term recurring movements in series
-  d) Noise - random variance in series
-  
-* Time Series Analysis & modelling of time-specific data can be done only on Stationary time series.  
-* Time series analysis is done only on **continuous variables** and includes Trend Analysis, Forecasting for Cyclical fluctuations or Seasonal patterns. **Trend Analysis** aims to analyze the movements in historical data using visualizations like line plots, bar charts while, **Forecasting** tries to predict the future values with available present & past data.
-
  
-### Slicing Amazon Stock Data for Forecasting - 
+## Slicing Amazon Stock Data for Forecasting - 
 
 * For ease of Stock Forecasting, henceforth we would only be using Amazon Stock price data from the Year **2015 onwards**. 
 * Also, we would be using only the **Adjusted Close** and **Date** columns of our Amazon time series for training different Stock Forecasting techniques or algorithms and making predictions. 
 
 
-### Testing for Stationarity - 
+## Testing for Stationarity - 
 
 Time Series analysis only works with stationary data therefore, we need to determine if our Amazon stock data is stationary or not. A dataset is stationary if its statistical properties like mean, variance, and autocorrelation do not change over time. We need to make the time-series stationary before fitting any model.
 
 Testing for Stationarity can be done using one or more of the following methods:-
+
 * **Rolling Statistics** - One of the more popular rolling statistics is the moving average. This takes a moving window of time, and calculates the average or the mean of that time period as the current value. Visualizing the rolling statistics for our time series will help us determine stationarity. A series becomes stationary if both the mean and standard deviation are flat lines (constant mean and constant variance).  
 
 We needed to check this for our Amazon time series as well so calculated and visualized the mean and standard deviation of Adjusted Close price for a 12-day window. Moving Standard Deviation is a statistical measurement of market volatility. The rolling standard deviation plot appears to be quite smooth in the beginning (2015-17 end) but becomes little volatile after 2018. In 2019 and end of 2020 there are some large movements. The rolling mean fits the original data for Amazon Adjusted Close quite closely.
@@ -156,7 +162,7 @@ We can see from the results above that our Test statistic was a positive value a
 Thus, by using both methods, plotting the rolling statistics and analyzing ADF test results we determined that our **Amazon time series was Non-Stationary**. Next, we had to work towards making our time series stationary before applying any Machine Learning modelling techniques.
 
 
- ### Making a Time Series Stationary  - 
+ ## Making a Time Series Stationary  - 
  
  As we discussed earlier, to proceed with any time series analysis using models, we needed to stationarize our Amazon stock time series. 
  
@@ -195,7 +201,7 @@ Both the 1st Order and 2nd Order of Differencing yielded very small p-values and
 
 By looking at the EDA for Amazon time series we could not be very sure about seasonality in the data. This can only be found if we decompose our time series. So, next we look into seasonal elements in our dataset.
 
- ### Seasonal Decomposition of a Time Series - 
+ ## Seasonal Decomposition of a Time Series - 
  
 A seasonal time series generally has some predictable patterns that repeat regularly (i.e., after any length of time). 
 
@@ -220,9 +226,9 @@ We could see from the decomposition plot that our Amazon stock data has both tre
 As we know that there is some seasonality in our Amazon time series we would use seasonal orders also while fitting different algorithms to our dataset. But before that we first need to select optimal orders for our dataset both seasonal and non-seasonal.
 
 
-### Selection of Non-seasonal and Seasonal Orders -
+## Selection of Non-seasonal and Seasonal Orders -
 
-Model orders - 
+### Model orders - 
 
 When fitting and working with AR, MA, ARMA or SARIMA models, it is very important to understand the model order. We need to pick the most optimal model order before fitting our time series to a model inorder to make better predictions. 
 
@@ -237,7 +243,7 @@ When fitting and working with AR, MA, ARMA or SARIMA models, it is very importan
   * **Non-seasonal orders** - autoregressive order (p), order of differencing (d) and moving average order (q)
   * **Seasonal orders** - autoregressive order (P), order of differencing (D), moving average order (Q) and a new order (S), which is the length of the seasonal cycle.
 
-Choosing Model Orders - 
+### Choosing Model Orders - 
 
 * **Using ACF and PACF plots** - One of the main ways to identify the correct model order is by using the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF). By comparing the ACF and PACF for a time series we can deduce the model order. The time series must be made stationary before making these plots.
 * **Using AIC and BIC values** - The Akaike Information Criterion (AIC), is a metric which tells us how good a model is. The Bayesian Information Criterion (BIC), is very similar to the AIC. Models which fit the data better have lower AICs and BICs, while BIC penalizes overly complex models. Mostly, both AIC and BIC will choose the same model. These can be found on the right side of the summary of the fitted-models-results object or by using the ***.aic attribute*** and the ***.bic attribute***.
@@ -283,9 +289,9 @@ Thus, by using both manual selection and automatic selection of orders we could 
 
 
 
-### Comparing Models and Interpreting Results - 
+## Comparing Models and Interpreting Results - 
 
-Interpreting Model Summary:
+### Interpreting Model Summary:
 
 Interpreting results from a machine learning algorithm can be a trying experience. An important component of statsmodel library is that we can inspect the results from the fitted model using a ***.summary() method***. 
 
@@ -303,7 +309,7 @@ Let us walkthrough the summary result components:-
 
 
 
-Interpreting Plot Diagnostics:
+### Interpreting Plot Diagnostics:
 
 For an ideal model the residuals should be uncorrelated white Gaussian noise centered to zero. We can use the results object's ***.plot_diagnostics method*** to generate four common plots for evaluating this. This 4-plot is a convenient graphical technique for model validation and consists of the following set of plots:-
 
@@ -319,7 +325,7 @@ For an ideal model the residuals should be uncorrelated white Gaussian noise cen
 Model results from each of the models selected and used for Amazon time series were interpreted using summary results and plot diagnostics methods as discussed above.
 
 
-### Splitting the Dataset for Time Series Analysis - 
+## Splitting the Dataset for Time Series Analysis - 
 
 Splitting the dataset is an important exerise before selecting and fitting machine learning algorithms on any dataset. For time series analysis, the split in dataset would be slightly different from other cases where we try to split datasets randomly into train-test subsets. Here, as we would be using past values to make future predictions hence, we would be splitting the data in relation to time i.e., training our algorithms on data coming earlier in time series and testing on data that comes later. 
 
@@ -328,7 +334,7 @@ Splitting the dataset is an important exerise before selecting and fitting machi
 As we can see from the plot above, we have split our Amazon time series also into training and testing subsets in the ratio of 80:20. The plot depicts how data earlier in time would be used for training the algorithms while latest data would be used for making forecasts.
 
 
-### Model Selection for Stock Predictions -
+## Model Selection for Stock Predictions -
 
 There are different kind of time series analysis techniques with the most common ones like the following -
 * Autoregression (AR)
@@ -385,7 +391,7 @@ There appears to be very little difference in the residual plot from SARIMA as c
 
 
 
-### Making Predictions from Most Optimal Model on Unseen Data (testing subset) - 
+## Making Predictions from Most Optimal Model on Unseen Data (testing subset) - 
 
 Although, training both **ARIMA(2,1,2)** and **SARIMA(2,1,2)(0,0,2,7)** on the training subset of Amazon series yielded very similar summary results and diagnostic plots, the SARIMA model seems to be a better fit for our dataset because it has seasonal orders hence, takes into account some seasonality in our data.
 
@@ -420,7 +426,7 @@ Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) al
 
 
 
-### Time Series Forecasting -
+## Time Series Forecasting -
 
 Time series forecasting is the use of a model to predict future values based on previously observed values.
 
