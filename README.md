@@ -254,7 +254,7 @@ When fitting and working with AR, MA, ARMA or SARIMA models, it is very importan
 * **Using AIC and BIC values** - The Akaike Information Criterion (AIC), is a metric which tells us how good a model is. The Bayesian Information Criterion (BIC), is very similar to the AIC. Models which fit the data better have lower AICs and BICs, while BIC penalizes overly complex models. Mostly, both AIC and BIC will choose the same model. These can be found on the right side of the summary of the fitted-models-results object or by using the ***.aic attribute*** and the ***.bic attribute***.
 
 
-**a) Manual Selection of Orders:-
+**a) Manual Selection of Orders:-**
 
 For our Amazon time series, we manually tried to select orders by writing for loops. We tried to fit models with multiple order combinations, extracted the AIC and BIC values for each combination of orders and then selected the order yielding the lowest AIC value. We found that the BIC score for the same order also turned out to be the lowest in almost every case. 
 
