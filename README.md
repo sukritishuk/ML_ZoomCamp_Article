@@ -1,14 +1,14 @@
 ## ML_ZoomCamp Article
 
-# **Amazon Stock Price Prediction using Time Series Forecasting**
+# Amazon Stock Prediction through Time Series Forecasting in Python 
 
+Time has always been a key factor in statistical analysis because of its dynamic, quantifiable nature and its impact on our daily lives. Time series algorithms are used extensively for analyzing and forecasting time-based data like budgeting, demand forecasting, production planning etc. Time Series Forecasting is among the most applied concept in data science and today, it has become all the more important with the emergence of real-time data and real-time analytics. 
 
-Time has always been a key factor in statistical analysis because of its quantifiable and ever-changing nature and its impact on our daily lives. Today, it has become all the more important in both financial & non-financial contexts with the emergence of real-time Data and real-time Analytics. In machine learning, Time Series Analsis & Forecasting is among the most applied in Data Science in real-world scenarios like financial analysis, demand forecasting, production planning etc. In Python uses timestamps, time deltas, and time periods for plotting time series data.
+I was new to time-series analysis in Python and wanted to challenge myself to make time series forecast using machine learning techniques in Python. Trying to predict the stock market appeared an exciting eventhough complex area to explore.  Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic Time Series Analysis & Forecasting in Python.  My goal here, was to use different time series algorithms and create a time-series based prediction service to make forecasts regarding Amazon stocks.
 
-Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic Time Series Analysis & Forecasting in Python.  My goal here, was to explore these areas and create a prediction service (model) to make accurate forecasts for Amazon stock data.
+Before moving ahead, let me list don the key topics covered by me in this article.
 
-
-Steps Taken for making Amazon Stock Forecasting -
+### Topics Covered -
 
 * [Key Concepts about Time-specific Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data--)
 * [Key Concepts about Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-series-analysis--)
@@ -27,12 +27,11 @@ Steps Taken for making Amazon Stock Forecasting -
 * [Time Series Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#time-series-forecasting--) 
 
 
-Before we move on to Time Series Analysis of Amazon Stock and using different Forecasting techniques to make predictions, let me first explain some key concepts about time-related data in general and time series analysis.
-
+Before we move on to Time Series Analysis of Amazon Stock, let me first explain some key concepts about time-related data in general and time series analysis.
 
 ## Key Concepts about Time-specific Data -
 
-* **TimeStamp** references a particular moment in time (e.g., January 4th, 2022 at 7:00am). **Time Intervals and Periods** reference a length of time between a particular beginning and end point. **Time deltas or durations** refer to an exact length of time, between two dates or times.
+* **TimeStamp** refers to a particular moment in time (e.g., January 4th, 2022 at 7:00am). **Time Intervals and Periods** refer to a length of time between a particular beginning and end point. **Time deltas or durations** refer to an exact length of time, between two dates or times.
 * **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Hours, Minutes, and Seconds. Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
 * **Trends** involve a gradual increase or decrease in time series data like a rise in death rates due to outbreak of a deadly disease.
 * **Seasonality** occurs in time series when a trend is periodically repeating itself e.g., increase in sale of home decorations around Christmas season. 
@@ -52,36 +51,41 @@ Before we move on to Time Series Analysis of Amazon Stock and using different Fo
   c) Seasonality - short-term recurring movements in series
   d) Noise - random variance in series
   
-* Time Series Analysis & modelling of time-specific data can be done only on Stationary time series.  
-* Time series analysis is done only on **continuous variables** and includes Trend Analysis, Forecasting for Cyclical fluctuations or Seasonal patterns. **Trend Analysis** aims to analyze the movements in historical data using visualizations like line plots, bar charts while, **Forecasting** tries to predict the future values with available present & past data.
+* Time Series Analysis & modelling of time-specific data can be done **only on Stationary time series**.  
+* Time series analysis is done only on **continuous variables** and includes Trend Analysis, Forecasting for Cyclical fluctuations or Seasonal patterns. 
+* **Trend Analysis** aims to analyze the movements in historical data using visualizations like line plots, bar charts while, **Forecasting** tries to predict the future values with available present & past data. 
+
+
+Now, that we have briefly talked about the basics of time-related concepts lets start with understanding our dataset for this article and project.
 
 
 ## Sources of Data -
 
-I retrieved Amazon Stock data from Kaggle Public Dataset - [FAANG- Complete Stock Data](https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data). The data was available as a csv file (*Amazon.csv*). The data contained all the relevant data such as Opening price, Closing price, Volumes of stock traded about the Amazon stock from 1997 to 2020.
+For Stock Forecasting I selected the stocks of [Amazon](https://en.wikipedia.org/wiki/Amazon_(company)), an American multinational technology company which focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. I retrieved Amazon Stock data from Kaggle Public Dataset - [FAANG- Complete Stock Data](https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data). 
+
+The data for Amazon was available as a csv file (*Amazon.csv*). The data contained all the relevant columns such as Opening price, Closing price, Volumes of stock traded from 1997 to 2020. Once the dataset was finalized, I cleaned and formatted it using Python libraries such as Pandas, Numpy. Matplotlib and Seaborn were used to perform EDA analysis on Amazon time series, make visualizations and draw insights from different features. After this, time series analysis and Forecasting techniques were used to train different algorithms and make predictions.
 
 
 ## Data Preparation - 
 
-**Loading & Studying the Data:**
+### Loading & Studying the Data:
 
-Firstly, I retrieved the time series data for Amazon company stock from Kaggle. There are multiple numerical feature columns in this dataset like below, apart from one time-based feature Date. 
-* Open and Close - starting and final price at which the stock is traded on a particular day.
-* High and Low - maximum and minimum trading price of the stock for the day. 
-* Close - last price at which the stock trades before markets closed for the day.
+Firstly, I retrieved the time series data for Amazon company stock from Kaggle. There were multiple numerical feature columns in this dataset (listed below), apart from one time-based feature column, **Date**.
+
+* Open and Close - Starting and final price at which the stock is traded on a particular day.
+* High and Low - Maximum and minimum trading price of the stock for the day.
+* Close - Last price at which the stock trades before markets closed for the day.
 * Adjusted Close (Adj Close) - Closing price for the stock on a day adjusted for corporate actions like stock-splits or dividends.
-* Volume - total number of shares traded (bought or sold) for Amazon during a day.
+* Volume - Total number of shares traded (bought or sold) for Amazon during a day.
 
 ![image](https://user-images.githubusercontent.com/50409210/151208664-a286b590-89b6-4cdf-b42a-fb7760d2ccce.png)
 
-The dataset pertains to the period between May 1997 and August 2020. Before any time series analysis, all the time-specific variables must be in the Datetime format. Thus, the following columns would have to be formatted first. Pandas library contains extensive tools for working with dates, times, and time-indexed data.
+The dataset contained values from May 1997 to August 2020 with 5852 rows of data, and each row representing one trading day during this period. Before making any time series analysis, we had to convert all the time-specific variables in the correct Datetime format. Python's [Pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html) contains extensive tools for working with dates, times, and time-indexed data.
 
 
-**Data Cleaning and Formatting:**
+### Data Cleaning and Formatting:
 
-I cleaned and pre-processed it, using Python in-built functions and libraries such as Pandas, Numpy. Then, Matplotlib and Seaborn libraries were used to perform EDA analysis on Amazon time series data, make visualizations and draw insights from the different features.
-
-Python's built-in [datetime modeule](https://docs.python.org/3/library/datetime.html) helps in working with dates and times. Here, I used this modoule to convert the Date column to DatetimeIndex data type. The most fundamental of date/time objects are the *Timestamp** and *DatetimeIndex* objects. I used the ***pd.to_datetime() function***, to parse Date columns. This converted the format from object to *datetime64* format, encoding dates as 64-bit integers, and thus allowing an arrays of dates to be represented very compactly. 
+Python's built-in [datetime module](https://docs.python.org/3/library/datetime.html) helps in working with dates and times. Here, I used this modoule to convert the Date column to DatetimeIndex data type. The most fundamental of date/time objects are the *Timestamp** and *DatetimeIndex* objects. I used the ***pd.to_datetime() function***, to parse Date columns. This converted the format from object to *datetime64* format, encoding dates as 64-bit integers, and thus allowing an arrays of dates to be represented very compactly. 
 
 ![image](https://user-images.githubusercontent.com/50409210/151670939-1b9a3c28-ef20-4100-9251-32a672580067.png)
 
