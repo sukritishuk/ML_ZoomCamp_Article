@@ -16,7 +16,7 @@ Steps Taken for making Amazon Stock Forecasting -
 * [Data Preparation](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#data-preparation--)
 * [Exploratory Data Analysis (EDA) of Time Series](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#exploratory-data-analysis-eda-of-time-series--)
 * [Slicing Amazon Stock Dataset for Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#slicing-amazon-stock-dataset-for-forecasting--)
-* [Testing for Stationarity](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#testing-for-stationarity--) 
+* [Testing for Stationarity](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#testing-for-stationarity--)   
 * [Making a Time Series Stationary](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-a-time-series-stationary---)
 * [Seasonal Decomposition of a Time Series](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#seasonal-decomposition-of-a-time-series--)
 * [Selection of Non-seasonal and Seasonal Orders](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#selection-of-non-seasonal-and-seasonal-orders--)
@@ -270,7 +270,7 @@ We used this same process to select the following order types:-
   * Seasonal Orders - P = 0, D = 1 and Q = 1
 
 
-**b) Automated Selection of Orders:- 
+**b) Automated Selection of Orders**:- 
 
 The [pmdarima package](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html), automatically discovers the optimal order for an ARIMA model. The ***auto_arima function*** from this package loops over model orders to find the best one. We used this method also to choose our most optimal model orders. he auto-arima function has a lot of parameters that we may want to set. Many of these have default values and the only required argument to the function is the data. Optionally we can also set the order of non-seasonal differencing; initial estimates of the non-seasonal orders; and the maximum values of non-seasonal orders to test.
 
@@ -395,7 +395,7 @@ The summary result above shows, that the model does not meet the condition of no
 There appears to be very little difference in the residual plot from SARIMA as compared to that from ARIMA.
 
 
-  ### Prophet by Facebook:
+### Prophet by Facebook:
 
 Lastly, I used the open-source [Prophet](https://github.com/facebook/prophet) algorithm developed by Facebook’s Core Data Science team. It is a third-party time series forecasting library which requires almost little data preprocessing and is very simple to implement. 
 
@@ -458,8 +458,7 @@ For our dataset, here too we set the start parameter to -30 as we wanted to make
 
 ### Making Out-of-Sample Forecasts:
 
-Finally, after testing our predictions in-sample, we can use our model to predict the future. To make future forecasts we use the ***get_forecast method*** of the results object. 
-* We choose the number of steps after the end of the training data to forecast up to by specifying the ***steps parameter***. For making forecasts using Amazon data for the next we used steps=182 in order to forecast for approximately 6 months into the future.
+Finally, after testing our predictions in-sample, we can use our model to predict the future. To make future forecasts we use the ***get_forecast method*** of the results object. We choose the number of steps after the end of the training data to forecast up to by specifying the ***steps parameter***. For making forecasts using Amazon data for the next we used steps=182 in order to forecast for approximately 6 months into the future.
 
 ![image](https://user-images.githubusercontent.com/50409210/151714446-e17166a6-2396-4a92-a2d1-0119448ce2a3.png)
 
