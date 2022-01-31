@@ -1,6 +1,6 @@
 ## ML_ZoomCamp Article
 
-# Amazon Stock Prediction through Time Series Forecasting in Python 
+# Amazon Time Series Analysis & Stock Forecasting
 
 Time has always been a key factor in statistical analysis because of its dynamic, quantifiable nature and its impact on our daily lives. Time series algorithms are used extensively for analyzing and forecasting time-based data like budgeting, demand forecasting, production planning etc. Time Series Forecasting is among the most applied concept in data science and today, it has become all the more important with the emergence of real-time data and real-time analytics. 
 
