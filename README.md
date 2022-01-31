@@ -13,28 +13,18 @@ Steps Taken for making Amazon Stock Forecasting -
 * [Key Concepts about Time-specific Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data--)
 * [Key Concepts about Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-series-analysis--)
 * [Sources of Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#sources-of-data--)
-* Data Preparation - 
-
-   * Loading & Studying the Data 
-   * Data Cleaning and Formatting - Changing data types, Missing Values Detection, Feature Engineering
-* Exploratory Data Analysis (EDA) of Time Series - Correlation, Moving Averages, Percentage Change in Stocks, Resampling 
-* Slicing Amazon Stock Data for Forecasting 
-* Testing for Stationarity 
-* Making a Time Series Stationary
-* Seasonal Decomposition of a Time Series
-* Selection of Non-seasonal and Seasonal Orders -
- 
-  * Manual selection of orders
-  * Automated selection of orders - using Pmdarima library (auto_arima)
-* Comparing Models and Interpreting Results
-* Splitting the Dataset for Time Series Analysis
-* Model Selection for Stock Predictions - ARIMA, Seasonal ARIMA (SARIMA) Model, Auto ARIMA, Prophet
-* Making Predictions from Most Optimal Model on Unseen Data (testing subset)
-* Time Series Forecasting - 
-
-    * Generating In-Sample (One-Step Ahead) Predictions for Amazon stock data
-    * Generating Dynamic Forecasts 
-    * Making Out-of-Sample Forecasts for Amazon stocks 
+* [Data Preparation](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#data-preparation--)
+* [Exploratory Data Analysis (EDA) of Time Series](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#exploratory-data-analysis-eda-of-time-series--)
+* [Slicing Amazon Stock Dataset for Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#slicing-amazon-stock-dataset-for-forecasting--)
+* [Testing for Stationarity](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#testing-for-stationarity--) 
+* [Making a Time Series Stationary](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-a-time-series-stationary---)
+* [Seasonal Decomposition of a Time Series](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#seasonal-decomposition-of-a-time-series--)
+* [Selection of Non-seasonal and Seasonal Orders](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#selection-of-non-seasonal-and-seasonal-orders--)
+* [Comparing Models and Interpreting Results](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#comparing-models-and-interpreting-results--)
+* [Splitting the Dataset for Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
+* [Model Selection for Stock Predictions](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
+* [Making Predictions from Most Optimal Model on Unseen Data (testing subset)](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-from-most-optimal-model-on-unseen-data-testing-subset--)
+* [Time Series Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#time-series-forecasting--) 
 
 
 Before we move on to Time Series Analysis of Amazon Stock and using different Forecasting techniques to make predictions, let me first explain some key concepts about time-related data in general and time series analysis.
