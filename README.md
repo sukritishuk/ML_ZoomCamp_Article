@@ -472,4 +472,3 @@ Finally, after testing our predictions in-sample, we can use our model to predic
 * https://jakevdp.github.io/PythonDataScienceHandbook/03.11-working-with-time-series.html
 * https://machinelearningmastery.com/time-series-forecasting-methods-in-python-cheat-sheet/
 * https://analyzingalpha.com/interpret-arima-results
-
