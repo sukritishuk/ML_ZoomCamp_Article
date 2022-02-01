@@ -221,9 +221,9 @@ A seasonal time series generally has some predictable patterns that repeat regul
 
 * Every time series is a combination of 3 parts - **Trend, Seasonality and Noise or Residual**. Separating a time series into its 3 components is called **decomposition of time series**. 
 
-  a) Trend - Increasing or falling value in a time series.
-  b) Seasonality - Short-term recurring movements in a time series.
-  c) Noise - Random variance in a time series explainable neither by trend nor seasonality.
+  * Trend - Increasing or falling value in a time series.
+  * Seasonality - Short-term recurring movements in a time series.
+  * Noise - Random variance in a time series explainable neither by trend nor seasonality.
 
 * In Python, [Automatic decomposition](https://analyticsindiamag.com/why-decompose-a-time-series-and-how/) of a time series can be performed using the ***seasonal_decompose() function*** in ***statsmodel library***. It requires one to specify whether the model is additive or multiplicative. The result object contains arrays to access four pieces of data from the decomposition. This can then be used to generate a plot that will split the time series into trend, seasonality, and noise.
 
