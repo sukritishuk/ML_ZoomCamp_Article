@@ -268,14 +268,14 @@ When fitting and working with AR, MA, ARMA or SARIMA models, it is very importan
 
 ### Choosing Model Orders: 
 
-* **Using ACF and PACF plots** - 
+## Using ACF and PACF plots - 
 
 [Autocorrelation and Partial Autocorrelation plots](https://machinelearningmastery.com/gentle-introduction-autocorrelation-partial-autocorrelation/) are used in time series analysis and forecasting to graphically summarize the strength of a relationship among observations. A plot of the autocorrelation of a time series by lag is called the AutoCorrelation Function or ACF. In Python, it can be plotted using the ***plot_acf() function*** from the ***statsmodels library***. Partial Autocorrelation Function or PACF on the other hand measures the correlation of the observation, with observations at intervening time steps. It can be plotted using the ***plot_pacf() function*** in Python.
 
 One of the main ways to identify the correct model order is by using the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF). By comparing the ACF and PACF for a time series one can deduce the model order. The time series must be made stationary before making these plots.
 
 
-* **Using AIC and BIC values** - 
+## Using AIC and BIC values - 
 
 The Akaike Information Criterion (AIC), is a metric which tells us how good a model is. The Bayesian Information Criterion (BIC), is very similar to the AIC. AIC and BIC are two ways of scoring a model based on its log-likelihood and complexity. Models which fit the data better have lower AICs and BICs, while BIC penalizes overly complex models. Mostly, both AIC and BIC will choose the same model. 
 
