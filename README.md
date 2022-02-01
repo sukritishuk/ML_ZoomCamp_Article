@@ -6,7 +6,7 @@ Time has always been a key factor in statistical analysis because of its dynamic
 
 I was new to time-series analysis in Python and wanted to challenge myself to make time series forecast using machine learning techniques in Python. Trying to predict the stock market appeared an exciting eventhough complex area to explore.  Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic Time Series Analysis & Forecasting in Python.  My goal here, was to use different time series algorithms and create a time-series based prediction service to make forecasts regarding Amazon stocks.
 
-Before moving ahead, let me list don the key topics covered by me in this article.
+Before moving ahead, let me list down the key topics covered by me in this article.
 
 ### Topics Covered -
 
