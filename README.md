@@ -440,10 +440,9 @@ I used an open-source algorithm developed by Facebook’s Core Data Science team
    While working with the Prophet algorithm for Amazon time series I undertook the following steps:-
 
    *  Firstly, I created a **Prophet instance** by specifying the Daily seasonality effects for the time series using the ***daily_seasonality=True parameter***. 
-   *  **Making In-sample Forecast for Amazon Stock** - After this I trained the model on the training subset and then made in-sample predictions for the duration of testing subset i.e., 283 time periods into the future by specifying the dates for this period. 
-   *  This yielded a DataFrame of forecasts with key parameters as columns ("ds” indicating the Date, “yhat” indicating the predicted time series data, “yhat_lower” and “yhat_upper” indicating the probable lower and upper limit of forecasts).
+   *  **Making In-sample Forecast for Amazon Stock** - After this I trained the model on the training subset and then made in-sample predictions for the duration of testing subset i.e., 283 time periods into the future by specifying the dates for this period. This yielded a DataFrame of forecasts with key parameters as columns ("ds” indicating the Date, “yhat” indicating the predicted time series data, “yhat_lower” and “yhat_upper” indicating the probable lower and upper limit of forecasts).
   
-     ![image](https://user-images.githubusercontent.com/50409210/152022719-8fe54254-4bf8-4992-8fe7-6d4310e4c831.png)
+    ![image](https://user-images.githubusercontent.com/50409210/152022719-8fe54254-4bf8-4992-8fe7-6d4310e4c831.png)
   
   * **Making Out-of-Sample Forecast for Amazon Stock** - Then, I used Prophet to make predictions about the next 182 time periods i.e., approximately the next 6 months into the future. This as sone fitting a fresh Prophet model to the entire Amazon data (combined training and testing subset) and setting the ***periods paramter*** to 182. Then using the ***.predict() function*** to make predictions.
   
