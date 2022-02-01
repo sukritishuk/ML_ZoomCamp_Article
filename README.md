@@ -10,7 +10,7 @@ Before moving ahead, let me list don the key topics covered by me in this articl
 
 ### Topics Covered -
 
-* [Key Concepts about Time-specific Data & Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data-&-time-series-analysis--)
+* [Key Concepts about Time-specific Data & Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data--time-series-analysis--)
 * [Sources of Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#sources-of-data--)
 * [Data Preparation](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#data-preparation--)
 * [Exploratory Data Analysis (EDA) of Time Series](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#exploratory-data-analysis-eda-of-time-series--)
