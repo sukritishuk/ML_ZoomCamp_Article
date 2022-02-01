@@ -123,7 +123,7 @@ Both these were a very preliminary analysis, because technical analysis for a st
 
 For ease of time series analysis and forecasting, I wanted to restrict using the Amazon stock dataset to include only recent time periods. Therefore, I went down reducing it from 1997 to include stock price data from the **2015 onwards** only. In addition to this, I used only the **Adjusted Close** and **Date** columns from the dataset to further analyze the time series, for training different algorithms and making predictions. This reduced my target variable (Adusted Close) and time-based column from 5852 rows to **1415 rows only**.
 
-Only this data subset was be later split into training and testing sets before training diffferent time series algorithms like ARIMA or Prophet.
+Only this data subset would be later split into training and testing sets before training diffferent time series algorithms like ARIMA or Prophet.
 
 
 
