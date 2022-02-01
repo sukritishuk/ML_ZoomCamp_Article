@@ -10,8 +10,7 @@ Before moving ahead, let me list don the key topics covered by me in this articl
 
 ### Topics Covered -
 
-* [Key Concepts about Time-specific Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data--)
-* [Key Concepts about Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-series-analysis--)
+* [Key Concepts about Time-specific Data & Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data-&-time-series-analysis--)
 * [Sources of Data](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#sources-of-data--)
 * [Data Preparation](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#data-preparation--)
 * [Exploratory Data Analysis (EDA) of Time Series](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#exploratory-data-analysis-eda-of-time-series--)
@@ -29,7 +28,7 @@ Before moving ahead, let me list don the key topics covered by me in this articl
 
 Before we move on to Time Series Analysis of Amazon Stock, let me first explain some key concepts about time-related data in general and time series analysis.
 
-## Key Concepts about Time-specific Data -
+## Key Concepts about Time-specific Data & Time Series Analysis -
 
 * **TimeStamp** refers to a particular moment in time (e.g., January 4th, 2022 at 7:00am). **Time Intervals and Periods** refer to a length of time between a particular beginning and end point. **Time deltas or durations** refer to an exact length of time, between two dates or times.
 * **Time series** is a set of data points that occur over a span or succesive periods of time like Years, Months, Weeks, Days, Hours, Minutes, and Seconds. Time series differs from **Cross-Sectional Data** as the latter considers only a single point in time while the former looks at a series or repeated samples of data over a time period. 
@@ -38,10 +37,6 @@ Before we move on to Time Series Analysis of Amazon Stock, let me first explain 
 * **Stationarity** of time series means that the distribution of the data in here, doesn't change with time i.e., the series must have zero trend, constant variance & constant autocorrelation. Absence, of any of these 3 conditions makes it **Non-Stationary**. 
 * **Rolling or Moving Aggregations** on data involves performing aggregations like average or sum of data, using a moving window over the entire dataset.
 * **Resampling** of time series data is common to ease anaysis and improve visualizations. It involves converting data to a higher or lower frequency like daily data to monthly or yearly.
-
-
-## Key Concepts about Time Series Analysis -
-
 * **Time Series Analysis** involves studying what changes are made in the economic asset or concerned variable during a period of time (e.g. price of gold, birth rates, rainfall levels etc.). It also studies the influence of time over other variables in data.
 * Characteristics in time series data like **seasonality, structural breaks, trends and cyclicity**, often differ from other types of data therefore, require unique set of tools and techniques for analysis.
 * A time series includes three systematic components: **Level, Trend, and Seasonality**, as well as one non-systematic component termed **Noise**.
@@ -70,24 +65,27 @@ The data for Amazon was available as a csv file (*Amazon.csv*). The data contain
 
 ### Loading & Studying the Data:
 
-Firstly, I retrieved the time series data for Amazon company stock from Kaggle. There were multiple numerical feature columns in this dataset (listed below), apart from one time-based feature column, **Date**.
+I retrieved the time series data for Amazon company stock from Kaggle as a csv file and then loaded it into a DataFrame using different Pandas' functions. There were multiple numerical feature columns in the dataset (as listed below) along with one time-based feature column, *Date*.
 
-* Open and Close - Starting and final price at which the stock is traded on a particular day.
-* High and Low - Maximum and minimum trading price of the stock for the day.
-* Close - Last price at which the stock trades before markets closed for the day.
-* Adjusted Close (Adj Close) - Closing price for the stock on a day adjusted for corporate actions like stock-splits or dividends.
-* Volume - Total number of shares traded (bought or sold) for Amazon during a day.
+* *Open* and *Close* - Starting and final price at which the stock is traded on a particular day.
+* *High* and *Low* - Maximum and minimum trading price of the stock for the day.
+* *Close* - Last price at which the stock trades before markets closed for the day.
+* *Adjusted Close (Adj Close)* - Closing price for the stock on a day adjusted for corporate actions like stock-splits or dividends.
+* *Volume* - Total number of shares traded (bought or sold) for Amazon during a day.
 
 ![image](https://user-images.githubusercontent.com/50409210/151208664-a286b590-89b6-4cdf-b42a-fb7760d2ccce.png)
 
-The dataset contained values from May 1997 to August 2020 with 5852 rows of data, and each row representing one trading day during this period. Before making any time series analysis, we had to convert all the time-specific variables in the correct Datetime format. Python's [Pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html) contains extensive tools for working with dates, times, and time-indexed data.
+The dataset contained values from *May 1997 to August 2020* with 5852 rows in total. Each row represented one trading day during this period. As the Date column was in **object** datatype format, before any time series analysis, we had to convert all time-specific columns into correct **Datetime** format. Python's [Pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html) contains extensive tools for working with dates, times, and time-indexed data.
 
 
 ### Data Cleaning and Formatting:
 
-Python's built-in [datetime module](https://docs.python.org/3/library/datetime.html) helps in working with dates and times. Here, I used this modoule to convert the Date column to DatetimeIndex data type. The most fundamental of date/time objects are the *Timestamp** and *DatetimeIndex* objects. I used the ***pd.to_datetime() function***, to parse Date columns. This converted the format from object to *datetime64* format, encoding dates as 64-bit integers, and thus allowing an arrays of dates to be represented very compactly. 
+Python's built-in [datetime module](https://docs.python.org/3/library/datetime.html) helps in working with dates and times. The most fundamental of date/time objects are the **Timestamp** and **DatetimeIndex** objects. 
+* First, I used the ***pd.to_datetime() function***, to parse Date column and converted it from object to **datetime64** format. This encodes dates as 64-bit integers, allowing an arrays of dates to be represented very compactly. 
 
 ![image](https://user-images.githubusercontent.com/50409210/151670939-1b9a3c28-ef20-4100-9251-32a672580067.png)
+
+* Further, I used the  modoule to convert the Date column into DatetimeIndex. 
 
 As the Amazon stock dataset had no missing values in any columns no imputations were needed. We used different instance attributes in the datetime module like ***.year() or .month_name()*** to strip or parse the date column features and create separate columns from them like for Year, Month Name, Day Name etc. This would be used in further EDA analysis on the dataset.
 
