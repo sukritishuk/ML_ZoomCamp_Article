@@ -446,7 +446,7 @@ I used an open-source algorithm developed by Facebook’s Core Data Science team
   
   * **Making Out-of-Sample Forecast for Amazon Stock** - Then, I used Prophet to make predictions about the next 182 time periods i.e., approximately the next 6 months into the future. This as sone fitting a fresh Prophet model to the entire Amazon data (combined training and testing subset) and setting the ***periods paramter*** to 182. Then using the ***.predict() function*** to make predictions.
   
-    ![image](https://user-images.githubusercontent.com/50409210/152023826-b6e8af6e-ceaf-464a-988d-46a82218ee28.png)
+  ![image](https://user-images.githubusercontent.com/50409210/152023826-b6e8af6e-ceaf-464a-988d-46a82218ee28.png)
   
   *  Prophet also allowed me to plot different components from the forecasts using the ***plot_components parameter*** thereby showing the trend, yearly weekly and daily plots.
   *  **Adding Changepoints*** is another useful feature in Prophet, allowing one to put more emphasis and find reasons for changes in trajectory or trends in data. Changepoints      are the datetime points where the time series have abrupt changes in the trajectory. By default, Prophet adds 25 changepoints to the initial 80% of the dataset.
