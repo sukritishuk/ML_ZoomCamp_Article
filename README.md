@@ -22,7 +22,7 @@ Before moving ahead, let me list don the key topics covered by me in this articl
 * [Comparing Models and Interpreting Results](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#comparing-models-and-interpreting-results--)
 * [Splitting the Dataset for Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
 * [Model Selection for Stock Predictions](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
-* [Making Predictions from Most Optimal Model regarding Unseen Data (testing subset)](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#key-concepts-about-time-specific-data--time-series-analysis--)
+* [Making Predictions from Most Optimal Model regarding Testing Set (unseen data)](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-from-most-optimal-model-regarding-testing-set-unseen-data--)
 * [Time Series Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#time-series-forecasting--) 
 
 
