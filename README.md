@@ -449,7 +449,7 @@ I used an open-source algorithm developed by Facebook’s Core Data Science team
   ![image](https://user-images.githubusercontent.com/50409210/152023826-b6e8af6e-ceaf-464a-988d-46a82218ee28.png)
   
   *  Prophet also allowed me to plot different components from the forecasts using the ***plot_components parameter*** thereby showing the trend, yearly weekly and daily plots.
-  *  **Adding Changepoints*** is another useful feature in Prophet, allowing one to put more emphasis and find reasons for changes in trajectory or trends in data. Changepoints      are the datetime points where the time series have abrupt changes in the trajectory. By default, Prophet adds 25 changepoints to the initial 80% of the dataset.
+  *  **Adding Changepoints** is another useful feature in Prophet, allowing one to put more emphasis and find reasons for changes in trajectory or trends in data. Changepoints      are the datetime points where the time series have abrupt changes in the trajectory. By default, Prophet adds 25 changepoints to the initial 80% of the dataset.
 
      ![image](https://user-images.githubusercontent.com/50409210/152024007-cca80ab0-8d2a-46e4-a706-d60b26c059f6.png)
 
