@@ -468,7 +468,7 @@ Next, I would use this model to make future or out-of-sample forecasts on the st
 
 I used **Mean Absolute Percentage Error (MAPE)** to test predictions from the SARIMA(2,1,2)(0,0,2,7) model on the testing subset against actual values. It yielded a **MAPE of 12.9%** indicating thet optimal SARIMA model was only **87.1% accurate** in predicting the test set observations. This suggests that this model is not exceptional and could have performed better if MAPE value was much lower.
 
-But for starter like me and looking at the complexity in stock price movements this classical ARIMA-based model yielded a fairly decent output for Amazon time series.
+But for a starter like me and looking at the complexity in stock price movements this classical ARIMA-based model yielded a fairly decent output for Amazon time series.
 
 
 ## Time Series Forecasting -
@@ -487,7 +487,7 @@ This forecasting technique allows to evaluate how good our model is at predictin
 
   * We can use the SARIMAX fitted results object's ***get_prediction() method*** to generate in-sample predictions. 
   * We can set the ***start parameter*** as a negative integer stating how many steps back to begin the forecast. For the Amazon time series, I set the start parameter to -30 as I wanted to make predictions for the last 30 time-periods of the Amazon data. It returned a forecast object. 
-  * The central value of the forecast is extracted and stored in the ****predicted_mean attribute*** of the forecast object and can be used alongwith the lower and upper confidence limits to plot forecasts. 
+  * The central value of the forecast is extracted and stored in the ***predicted_mean attribute*** of the forecast object and can be used alongwith the lower and upper confidence limits to plot forecasts. 
   * Here, the mean prediction is marked with a red line while the uncertainty range is shaded. The uncertainty is due to the random shock terms that we can't predict.
 
 ![image](https://user-images.githubusercontent.com/50409210/151714373-5c16c06c-ac16-4c44-880a-4c628355770f.png)
