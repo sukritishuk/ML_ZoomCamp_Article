@@ -444,7 +444,7 @@ I used an open-source algorithm developed by Facebook’s Core Data Science team
   
   ![image](https://user-images.githubusercontent.com/50409210/152033936-493a5576-50b3-4ba8-8d98-9722a057a0e9.png)
   
-  * **Making Out-of-Sample Forecast for Amazon Stock** - Then, I used Prophet to make predictions about the next 182 time periods i.e., approximately the next 6 months into the future. This as sone fitting a fresh Prophet model to the entire Amazon data (combined training and testing subset) and setting the ***periods paramter*** to 182. Then using the ***.predict() function*** to make predictions.
+  * **Making Out-of-Sample Forecast for Amazon Stock** - Then, I used Prophet to make predictions about the next 182 time periods i.e., approximately the next 6 months into the future. This was done by fitting a fresh Prophet model to the entire Amazon data (combined training and testing subset) and setting the ***periods paramter*** to 182. Then using the ***.predict() function*** to make predictions.
   
   ![image](https://user-images.githubusercontent.com/50409210/152023826-b6e8af6e-ceaf-464a-988d-46a82218ee28.png)
   
