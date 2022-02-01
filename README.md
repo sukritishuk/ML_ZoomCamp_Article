@@ -282,7 +282,7 @@ The Akaike Information Criterion (AIC), is a metric which tells us how good a mo
 These can be found on the right side of the summary of the fitted-models-results object. In Python these can be computed using the ***.aic attribute*** and the ***.bic attribute***.
 
 
-## Manual Selection of Orders:
+### Manual Selection of Orders:
 
 For Amazon time series, I tried to manually select orders using for-loops and different ranges. Then, I fitted a time series algorithm with different order combinations, extracted the AIC and BIC values for each combination of orders and selected the order combination yielding the lowest AIC value. I found that the BIC score also turned out to be the lowest for the same order combinations. 
 
@@ -298,7 +298,7 @@ I used this same process to select the following order types:-
   * Seasonal Orders - P = 0, D = 1 and Q = 1
 
 
-## Automated Selection of Orders:
+### Automated Selection of Orders:
 
 The [pmdarima package](https://alkaline-ml.com/pmdarima/modules/generated/pmdarima.arima.auto_arima.html), automatically discovers the most optimal order for an ARIMA model. The ***auto_arima function*** from this package loops over model orders to find the best one. Many of these have default values and the only required argument to the function is the data. Optionally, we can also set the order of non-seasonal differencing; initial estimates of the non-seasonal orders; and the maximum values of non-seasonal orders to test.
 
