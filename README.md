@@ -109,7 +109,7 @@ Visualizing movements in Amazon stock Volumes from a Weekday and Month perpectiv
 
   ![image](https://user-images.githubusercontent.com/50409210/151675266-0d9c80ca-6921-4996-bb40-9f18f598ed5f.png)
 
-Next, I wanted to explore the correlation among different price indicators, difference between them and Volume for the Amazon stock dataset. For example. I wanted to understand the relation between Volume and Lowest Price when deducted from Daily Close. This was done by adding new columns for Price differences like *Close-High, High-Open* etc. and creating a Heatmap to visualize correlations among variables.
+Next, I wanted to explore the correlation among different price indicators, difference between them and Volume for the Amazon stock dataset. For example. I wanted to understand the relation between Volume and Lowest Price when deducted from Daily Close. This was done by adding new columns for Price differences like *Close-High, High-Low* etc. and creating a Heatmap to visualize correlations among variables.
 
 As we can see from the plot below, the **Close minus High** (shown as Close-High in plot below) variable showed the maximum positive correlation with Volume. We can say that if the Amazon Closing price stays away from High value, it may lead to more transactions or trading volumes that day for the stock. Also, the **Open minus Close** (shown as Open-Close in plot below) variable had the most negative correlation with Volume. This could indicate that the lesser the difference between Closing price of Amazon stock on a day and its Opening price the next day, higher would be its trading Volume.
 
