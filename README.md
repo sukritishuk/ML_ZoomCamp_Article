@@ -70,19 +70,19 @@ I retrieved the time series data for Amazon company stock from Kaggle as a csv f
 
 ![image](https://user-images.githubusercontent.com/50409210/151208664-a286b590-89b6-4cdf-b42a-fb7760d2ccce.png)
 
-The dataset contained values from *May 1997 to August 2020* with 5852 rows in total. Each row represented one trading day during this period. As the Date column was in **object** datatype format, before any time series analysis, we had to convert all time-specific columns into correct **Datetime** format. Python's [Pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html) contains extensive tools for working with dates, times, and time-indexed data.
+The dataset contained values from *May 1997 to August 2020* with **5852 rows** in total. Each row represented one trading day during this period. As the *Date* column was in **object** datatype format, before any time series analysis, we had to convert all time-specific columns into correct **Datetime** format. Python's [Pandas library](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html) contains extensive tools for working with dates, times, and time-indexed data.
 
 
 ### Data Cleaning and Formatting:
 
 Python's built-in [datetime module](https://docs.python.org/3/library/datetime.html) helps in working with dates and times. The most fundamental of date/time objects are the **Timestamp** and **DatetimeIndex** objects. 
 
-* First, I used the ***pd.to_datetime() function***, to parse Date column and convert it from object to **datetime64** format. This encodes dates as 64-bit integers, allowing an arrays of dates to be represented very compactly. 
+* First, I used the ***pd.to_datetime() function***, to parse the *Date* column and convert it from object to **datetime64** format. This encodes dates as 64-bit integers, allowing an arrays of dates to be represented very compactly. 
 
 ![image](https://user-images.githubusercontent.com/50409210/151963829-972f5aef-35a9-4f3b-aa36-dd2127d17873.png)
 
-* I also used the [DatetimeIndex object](https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.html) to convert the Date column into DatetimeIndex first.
-* Then. various attributes of this object were used (like year, month_name etc.) to extract different elements from each Date entry. For instance, I used the ***.year() and .month_name()*** attributes to strip only the Year and Month Names respectively from every Date row. These elements were then used as part of **Feature Engineering** to create new columns for Year, Month Name, Day Name etc. which would be used in EDA analysis.
+* I also used the [DatetimeIndex object](https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.html) to convert the *Date* column into DatetimeIndex first.
+* Then. various attributes of this object were used (like year, month_name etc.) to extract different elements from each date entry. For instance, I used the ***.year() and .month_name()*** attributes to strip only the year and month names respectively from every Date row. These elements were then used as part of **Feature Engineering** to create new columns for *Year*, *Month Name*, *Day Name* etc. which would be used in EDA analysis.
 
 ![image](https://user-images.githubusercontent.com/50409210/151671634-deddae70-1374-4fc2-915e-25e6093f6d6c.png)
 
@@ -91,7 +91,7 @@ As the Amazon stock dataset had no missing values in any columns no imputations 
 
 ## Exploratory Data Analysis (EDA) of Time Series -
 
-Now, that I had the dataset cleaned and formatted I carried out some of the following Exploratory Data Analysis to understand the time series for Amazon stocks.
+Now, that I had the dataset cleaned and formatted I carried out some of the following Exploratory Data Analysis to better understand the time series for Amazon stocks.
 
 As shown below, Amazon stocks had a very steep rise in Closing (adjusted) Price after 2016. However, its Volumes have declined from the levels in 2000 or 2008, when they were at peak.
 
@@ -101,15 +101,15 @@ Both the 50-day and 200-day Moving Average plots for Amazon show a fairly smooth
 
   ![image](https://user-images.githubusercontent.com/50409210/151674901-950f0f48-fbb4-4896-8d28-4db07a7f28dc.png)
   
-My next plot, visualized the average daily Returns for Amazon stock. The daily movements have reduced over time as we can see small percentage change (increase or decrease) in the stock value from 2016 onwards compared to that in the 2000s.
+My next plot, visualized the average daily *Returns* for Amazon stock. The daily movements have reduced over time as we can see small percentage change (increase or decrease) in the stock value from 2016 onwards compared to that in the 2000s.
   
   ![image](https://user-images.githubusercontent.com/50409210/151675037-0ffa48a1-21ce-4aec-9cd7-9c4d464e8841.png)
   
-Visualizing movements in Amazon stock Volumes from a Weekday and Month perpective was my next visulaization. As shown below, Volumes appear to be the largest on Wednesdays and Thursdays while almost Nil on weekends (Saturday, Sunday). This was due to no trading on weekends. Also, the month of January appears to have the highest Volumes for Amazon stocks followed by July, October and November. The month of August on the other hand, has the lowest levels of Volume. 
+Visualizing movements in Amazon stock Volumes from a Weekday and Month perpective was my next visulaization. As shown below, *Volumes* appear to be the largest on *Wednesdays* and *Thursdays* while almost Nil on weekends (Saturday, Sunday). This was due to no trading on weekends. Also, the month of *January* appears to have the highest Volumes for Amazon stocks followed by *July, October* and *November*. The month of *August* on the other hand, has the lowest levels of Volume. 
 
   ![image](https://user-images.githubusercontent.com/50409210/151675266-0d9c80ca-6921-4996-bb40-9f18f598ed5f.png)
 
-Next, I wanted to explore the correlation among different price indicators, difference between them and Volume for the Amazon stock dataset. For example. I wanted to understand the relation between Volume and Lowest Price when deducted from Daily Close. This was done by adding new columns for Price differences and creating a Heatmap to visualize correlations among variables.
+Next, I wanted to explore the correlation among different price indicators, difference between them and Volume for the Amazon stock dataset. For example. I wanted to understand the relation between Volume and Lowest Price when deducted from Daily Close. This was done by adding new columns for Price differences like *Close-High, High-Open* etc. and creating a Heatmap to visualize correlations among variables.
 
 As we can see from the plot below, the **Close minus High** (shown as Close-High in plot below) variable showed the maximum positive correlation with Volume. We can say that if the Amazon Closing price stays away from High value, it may lead to more transactions or trading volumes that day for the stock. Also, the **Open minus Close** (shown as Open-Close in plot below) variable had the most negative correlation with Volume. This could indicate that the lesser the difference between Closing price of Amazon stock on a day and its Opening price the next day, higher would be its trading Volume.
 
@@ -121,10 +121,9 @@ Both these were a very preliminary analysis, because technical analysis for a st
 
 ## Slicing Amazon Stock Dataset for Forecasting - 
 
-For ease of time series analysis and forecasting, I wanted to restrict using the Amazon stock dataset to include only recent time periods. Therefore, I went down reducing it from 1997 to include stock price data from the **2015 onwards** only. In addition to this, I used only the **Adjusted Close** and **Date** columns from the dataset to further analyze the time series, for training different algorithms and making predictions. This reduced my target variable (Adusted Close) and time-based column from 5852 rows to **1415 rows only**.
+For ease of time series analysis and forecasting, I wanted to restrict using the Amazon stock dataset to include only recent time periods. Therefore, I went down reducing it from 1997 to include stock price data from the **2015 onwards** only. In addition to this, I used only the **Adjusted Close** and **Date** columns from the dataset to further analyze the time series, for training different algorithms and making predictions. 
 
-Only this data subset would be later split into training and testing sets before training diffferent time series algorithms like ARIMA or Prophet.
-
+This reduced my target variable (Adusted Close) and time-based column from 5852 rows to **1415 rows only**. Hereafter, only this data subset would be split into training and testing sets before training different time series algorithms like ARIMA or Prophet and making forecasts.
 
 
 ## Testing for Stationarity - 
@@ -138,16 +137,20 @@ Testing for Stationarity can be done using one or more of the following methods:
 
 ### Rolling Statistics:
 
-One of the most popular rolling statistics is the Moving Average. This takes a moving window of time, and calculates the average or the mean of that time period as the current value. Visualizing the rolling statistics for Amazon time series would help me determine if it is stationary or not. A series becomes stationary when both the mean and standard deviation are flat lines (constant mean and constant variance).  I needed to check this for Amazon time series as well so calculated and visualized the mean and standard deviation of Adjusted Close price for a 12-day window. Moving Standard Deviation is another statistical measurement of market volatility. 
+One of the most popular rolling statistics is the Moving Average. This takes a moving window of time, and calculates the average or the mean of that time period as the current value. Visualizing the rolling statistics for Amazon time series would help me determine if it is stationary or not. A series becomes stationary when both the mean and standard deviation are flat lines (constant mean and constant variance).  
+
+I needed to check this for Amazon time series as well so calculated and visualized the mean and standard deviation of Adjusted Close price for a 12-day window. Moving Standard Deviation is another statistical measurement of market volatility which I tried analyzing. As visible from the plots below, the rolling mean for Amazon Adjusted Close fitted the original data values quite closely.
 
   ![image](https://user-images.githubusercontent.com/50409210/151713977-fef5d7b1-ab0f-4b65-a2d4-6f592e99a3dd.png)
 
-The rolling mean for Amazon Adjusted Close fits the original data values quite closely. The rolling standard deviation plot appears to be quite smooth in the beginning (2015-17 end) but becomes little volatile after 2018. In 2019 and end of 2020 there are some large movements. From the plots above, I found that there was an increasing mean and standard deviation, indicating that this series was not stationary. However, to become more sure about stationarity I performed the ADF test as well.
+The rolling standard deviation plot appears to be quite smooth in the beginning (2015-17 end) but becomes little volatile after 2018. In 2019 and end of 2020 there are some large movements. 
+
+From the plots above, I found that there was an increasing mean and standard deviation, indicating that this series was not stationary. However, to become more sure about stationarity I performed the ADF test as well.
 
 
 ### Augmented Dicky-Fuller (ADF) Test:
 
-The [Augmented Dicky-Fuller or ADF Test](https://machinelearningmastery.com/time-series-data-stationary-python/), is a common statistical hypothesis test for stationarity and is based on the concept of unit root. Null Hypothesis (H0) for this test states that the time series is non-stationary due to trend i.e., a unit root is present in the time series. The Alternative Hypothesis (Ha) states that the data is stationary.  In this case, we cannot reject the null hypothesis we will have to assume that the data is non-stationary.
+The [Augmented Dicky-Fuller or ADF Test](https://machinelearningmastery.com/time-series-data-stationary-python/), is a common statistical hypothesis test for stationarity and is based on the concept of unit root. *Null Hypothesis (H0)* for this test states that the time series is non-stationary due to trend i.e., a unit root is present in the time series. The *Alternative Hypothesis (Ha)* states that the data is stationary.  In this case, we cannot reject the null hypothesis we will have to assume that the data is non-stationary.
 
 In Python, the [ADF test](https://www.statsmodels.org/dev/generated/statsmodels.tsa.stattools.adfuller.html) can be performed using the ***adfuller() function*** from the **statsmodels library**. The result object of the ADF test is a tuple with following key elements:
 
@@ -244,7 +247,7 @@ I decomposed the Amazon time series using statsmodel's seasonal_decompose() func
 We can see from the decomposition plot above that the Amazon stock time series has both trend and seasonality. The pattern of trend is positive and increasing in nature however, the seasonality pattern does not appear to be very clear from this decomposition plot as well. But as we know that there is some seasonality in the Amazon time series I would be using the seasonal orders also while training time series algorithms to our dataset. 
 
 
-Next, we need to select optimal orders for our dataset both seasonal and non-seasonal before applying any time series algorithms for forecasting.
+Next, I needed to select optimal orders for the dataset both seasonal and non-seasonal before applying any time series algorithms for making forecasts.
 
 
 
@@ -375,17 +378,19 @@ The plot below, depicts the split Amazon time series into training and testing s
 Now that we have seen the main specificities of time series data, it is time to look into the types of models that can be used for predicting time series. This task is generally referred to as forecasting.
 
 There are different kind of time series analysis techniques with the most common and classic being the *ARIMA models* like the following -
+
 * Autoregression (AR)
 * Moving Average (MA)
 * Autoregressive Moving Average (ARMA)
 * Autoregressive Integrated Moving Average (ARIMA)
 * Seasonal Autoregressive Integrated Moving-Average (SARIMA)
+* Seasonal Autoregressive Integrated Moving-Average with Exogenous Regressors (SARIMAX)
 
-**Autoregressive (AR), Integrated (I), Moving Average(MA)** are combined to form **Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA)** models. SARIMA combines the ARIMA model with the ability to perform the same autoregression, differencing, and moving average modeling at the seasonal level. A SARIMA model can be used to develop AR, MA, ARMA and ARIMA models. 
+The set of models are smaller in nature and can be combined or used as a standalone model in itself. **Autoregressive (AR), Integrated (I), Moving Average(MA)** are combined to form **Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA)** models. **Seasonal Autoregressive Integrated Moving-Average (SARIMA)** model combines the ARIMA model with the ability to perform the same autoregression, differencing, and moving average modeling at the seasonal level. This model is useful if seasonality is present in the time series as it works with seasonal parameter on top of the regular or non-seasonal parameters. 
 
 The **Seasonal Autoregressive Integrated Moving-Average with Exogenous Regressors (SARIMAX)** is an extension of the SARIMA model that also includes the modeling of exogenous variables. These are parallel input sequences having observations at the same time steps as the original series.
 
-Some deep learning-based techniques include **Long-short term memory(LSTM)**.
+Some deep learning-based techniques include **Long-short Term Memory(LSTM)**, which are specific type of Recurrent Neural Networks (RNNs) and quite complex in nature.
 
 
 For analyzing Amazon stock time series I used the following Time Series Modelling techniques:-
