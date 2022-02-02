@@ -21,8 +21,8 @@ Before moving ahead, let me list down the key topics covered by me in this artic
 * [Selection of Non-seasonal and Seasonal Orders](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#selection-of-non-seasonal-and-seasonal-orders--)
 * [Comparing Models and Interpreting Results](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#comparing-models-and-interpreting-results--)
 * [Splitting the Dataset for Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
-* [Model Selection for Stock Predictions]()
-* [Making Predictions on Testing Set (unseen data) using most Optimal Model](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-from-most-optimal-model-regarding-testing-set-unseen-data--)
+* [Model Selection for Stock Predictions](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#model-selection-for-stock-predictions--)
+* [Making Predictions on Testing Set (unseen data) using most Optimal Model](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-on-testing-set-unseen-data-using-most-optimal-model--)
 * [Time Series Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#time-series-forecasting--) 
 
 
