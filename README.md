@@ -24,6 +24,7 @@ Before moving ahead, let me list down the key topics covered by me in this artic
 * [Model Selection for Stock Predictions](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#model-selection-for-stock-predictions--)
 * [Making Predictions on Testing Set (unseen data) using most Optimal Model](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-on-testing-set-unseen-data-using-most-optimal-model--)
 * [Time Series Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#time-series-forecasting--) 
+* [Conclusion](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#conclusion--)
 
 
 Before we move on to Time Series Analysis of Amazon Stock, let me first explain some key concepts about time-related data in general and time series analysis.
@@ -529,9 +530,9 @@ The plot in red below shows the Forecasted Adjusted Closing price for Amazon sto
 
 ## Conclusion - 
 
-This completes my time series analysis and modelling to forecast Amazon stock prices. I used Python-based machine learning techniques both classical and modern to make preliminary forecasts about stock price movements. However, as the stock market is very dynamic and volatile the accuracy of predictions is very difficult for such time series. As a next step, I would like to explore some more advanced algorithms for time series forecasting in future alongwith using deep learning methods.
+This completes my time series analysis and modelling effort to forecast Amazon stock prices. I used Python-based machine learning techniques both classical and modern to make preliminary forecasts about stock price movements. However, as the stock market is very dynamic and volatile the accuracy of predictions is very difficult for such time series. As a next step, I would like to explore some more advanced algorithms for time series forecasting in future alongwith using deep learning methods.
 
-Hope you enoyed reading through this article and had some learning takeaways from it.
+Hope you enjoyed reading through this article and had some learning takeaways from it.
 
 
 
