@@ -507,7 +507,7 @@ We can make predictions further than just one step ahead by using dynamic predic
 
 ![image](https://user-images.githubusercontent.com/50409210/151714390-efd27b09-6b4f-46d6-b659-bc303f241c74.png)
 
-For Amazon dataset, here too I set the start parameter to -30 as I wanted to make dynamic predictions for the last 30 time-periods of the Amazon data. Here also the dynamic forecasts are shown as a red line. The actual or observed values have been made lighter by the use of alpha parameter. It appears that our dynamic forecast do not align very well with the observed ones but are reasonably fine.
+For Amazon dataset, here too I set the start parameter to -30 as I wanted to make dynamic predictions for the last 30 time-periods of the Amazon data. Here also the dynamic forecasts are shown as a red line. The actual or observed values have been made lighter by the use of alpha parameter. It appears that our dynamic forecast do not align very well with the observed ones but are reasonably fine. 
 
 
 ### Making Out-of-Sample Forecasts:
