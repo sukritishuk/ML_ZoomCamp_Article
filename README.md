@@ -4,7 +4,7 @@
 
 Time has always been a key factor in statistical analysis because of its dynamic, quantifiable nature and its impact on our daily lives. Time series algorithms are used extensively for analyzing and forecasting time-based data like budgeting, demand forecasting, production planning etc. Forecasting is among the most applied concept in data science and today, it has become all the more important with the emergence of real-time data and real-time analytics. 
 
-I was new to time-series analysis in Python and wanted to challenge myself to make time series forecast using machine learning techniques in Python. Trying to predict the stock market appeared an exciting eventhough complex area to explore.  Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic Time Series Analysis & Forecasting in Python.  My goal here, was to use different time series algorithms and create a time-series based prediction service to make forecasts regarding Amazon stocks.
+I was new to time-series analysis in Python and wanted to challenge myself to make time series forecast using **Time Series Modelling** in Python. Trying to predict the stock market appeared an exciting eventhough complex area to explore.  Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting** in Python.  My goal here, was to use different time series algorithms and create a time-series based prediction service to make forecasts regarding Amazon stocks.
 
 Before moving ahead, let me list down the key topics covered by me in this article.
 
