@@ -21,8 +21,8 @@ Before moving ahead, let me list down the key topics covered by me in this artic
 * [Selection of Non-seasonal and Seasonal Orders](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#selection-of-non-seasonal-and-seasonal-orders--)
 * [Comparing Models and Interpreting Results](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#comparing-models-and-interpreting-results--)
 * [Splitting the Dataset for Time Series Analysis](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
-* [Model Selection for Stock Predictions](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#splitting-the-dataset-for-time-series-analysis--)
-* [Making Predictions from Most Optimal Model regarding Testing Set (unseen data)](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-from-most-optimal-model-regarding-testing-set-unseen-data--)
+* [Model Selection for Stock Predictions]()
+* [Making Predictions on Testing Set (unseen data) using most Optimal Model](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#making-predictions-from-most-optimal-model-regarding-testing-set-unseen-data--)
 * [Time Series Forecasting](https://github.com/sukritishuk/ML_ZoomCamp_Article/blob/main/README.md#time-series-forecasting--) 
 
 
@@ -454,7 +454,7 @@ I used an open-source algorithm developed by Facebook’s Core Data Science team
      ![image](https://user-images.githubusercontent.com/50409210/152024007-cca80ab0-8d2a-46e4-a706-d60b26c059f6.png)
 
 
-## Making Predictions from Most Optimal Model regarding Testing Set (unseen data) - 
+## Making Predictions on Testing Set (unseen data) using most Optimal Model - 
 
 Although, training both **ARIMA(2,1,2)** and **SARIMA(2,1,2)(0,0,2,7)** on the training subset of Amazon series yielded very similar summary results and diagnostic plots, the SARIMA model seemed to be a better fit for this dataset because it has seasonal orders hence, takes into account some seasonality in our data.
 
