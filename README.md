@@ -8,6 +8,7 @@ DataTalks.Club - [Machine Learning Zoomcamp](https://datatalks.club/courses/2021
 Prepared by - [Sukriti Shukla](https://www.linkedin.com/in/sukriti-shukla-3989a819/)
 
 ![pexels-burak-kebapci-186461](https://user-images.githubusercontent.com/50409210/152795492-26652aa7-54bf-4aad-b041-4468b2f835d8.jpg)
+
 [Photo by Burak Kebapci from Pexels](https://www.pexels.com/photo/black-blue-and-red-graph-illustration-186461/)
 
 Time has always been a key factor in statistical analysis because of its dynamic, quantifiable nature and its impact on our daily lives. Time series algorithms are used extensively for analyzing and forecasting time-based data like budgeting, demand forecasting, production planning etc. Forecasting is among the most applied concept in data science and today, it has become all the more important with the emergence of real-time data and real-time analytics. 
