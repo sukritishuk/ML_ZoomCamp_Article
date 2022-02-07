@@ -2,6 +2,14 @@
 
 # Time Series Modelling & Stock Forecasting in Python 
 
+
+DataTalks.Club - [Machine Learning Zoomcamp](https://datatalks.club/courses/2021-winter-ml-zoomcamp.html) **Article** - an initiative by Alexey Grigorev
+
+Prepared by - [Sukriti Shukla](https://www.linkedin.com/in/sukriti-shukla-3989a819/)
+
+![pexels-burak-kebapci-186461](https://user-images.githubusercontent.com/50409210/152795492-26652aa7-54bf-4aad-b041-4468b2f835d8.jpg)
+[Photo by Burak Kebapci from Pexels](https://www.pexels.com/photo/black-blue-and-red-graph-illustration-186461/)
+
 Time has always been a key factor in statistical analysis because of its dynamic, quantifiable nature and its impact on our daily lives. Time series algorithms are used extensively for analyzing and forecasting time-based data like budgeting, demand forecasting, production planning etc. Forecasting is among the most applied concept in data science and today, it has become all the more important with the emergence of real-time data and real-time analytics. 
 
 I was new to time-series analysis in Python and wanted to challenge myself to make time series forecast using **Time Series Modelling** in Python. Trying to predict the stock market appeared an exciting eventhough complex area to explore.  Through this article, I wanted to discuss key concepts, techniques and methods used to perform basic **Time Series Analysis & Forecasting** in Python.  My goal here, was to use different time series algorithms and create a time-series based prediction service to make forecasts regarding Amazon stocks.
